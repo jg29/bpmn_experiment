@@ -36,4 +36,19 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+
+    /**
+     * Experimente eines Users anzeigen
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function experiments() {
+
+        return $this->hasMany('App\Experiment');
+
+
+    }
+
+
 }

@@ -12,3 +12,7 @@
 */
 
 Route::get('/', "PagesController@home");
+
+Route::resource('experiment','ExperimentController');
+
+

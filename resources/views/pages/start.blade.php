@@ -5,10 +5,16 @@
 
 
 <div class="form">
-    <form>
-        <h1>Experiment</h1>
-        Schlüssel: <input type="text" name="key"><br>
-        <input type="submit" value="Start">
-    </form>
+
+    <h1>Experiment</h1>
+
+    {!! Form::open() !!}
+        {!! Form::label('key', 'Schlüssel:') !!}
+        {!! Form::text('key') !!}<br>
+        {!! Form::submit('Start') !!}
+    {!! Form::close() !!}
+
+
+
 </div>
 @stop
