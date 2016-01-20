@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Experiment extends Model
 {
 
+    protected $fillable = [
+        'title',
+        'text',
+        'element',
+        'key'
+    ];
+
 
     /**
      * Ersteller des Experimentes

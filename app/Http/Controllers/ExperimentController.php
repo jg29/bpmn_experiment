@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Experiment;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
+use App\Http\Requests\ExperimentRequest;
+
 use App\Http\Controllers\Controller;
 
 class ExperimentController extends Controller
@@ -16,7 +20,9 @@ class ExperimentController extends Controller
      */
     public function index()
     {
-        return view('experiment.index');
+        $experiments = Auth::user()->experiments()->get();
+
+        return view('experiment.index', compact('experiments'));
     }
 
     /**
@@ -26,7 +32,7 @@ class ExperimentController extends Controller
      */
     public function create()
     {
-        //
+        return view('experiment.create');
     }
 
     /**
@@ -35,9 +41,11 @@ class ExperimentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExperimentRequest $request)
     {
-        //
+        Auth::user()->experiments()->save(new Experiment($request->all()));
+
+        return redirect('experiment');
     }
 
     /**
@@ -48,7 +56,8 @@ class ExperimentController extends Controller
      */
     public function show($id)
     {
-        //
+        $experiment = Experiment::findOrFail($id);
+        return view('experiment.show', compact('experiment'));
     }
 
     /**
@@ -59,7 +68,8 @@ class ExperimentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $experiment = Experiment::findOrFail($id);
+        return view('experiment.edit', compact('experiment'));
     }
 
     /**
@@ -69,9 +79,13 @@ class ExperimentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ExperimentRequest $request, $id)
     {
-        //
+        $experiment = Experiment::findOrFail($id);
+
+        $experiment->update($request->all());
+        return redirect('experiment');
+
     }
 
     /**

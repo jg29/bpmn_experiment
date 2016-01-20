@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <a href="/login">Login</a>
+    <a href="auth/login">Login</a>
 
 
 <div class="form">
@@ -9,9 +9,9 @@
     <h1>Experiment</h1>
 
     {!! Form::open() !!}
-        {!! Form::label('key', 'Schlüssel:') !!}
-        {!! Form::text('key') !!}<br>
-        {!! Form::submit('Start') !!}
+    {!! Form::label('key', 'Schlüssel:') !!}
+    {!! Form::text('key') !!}<br>
+    {!! Form::submit('Start') !!}
     {!! Form::close() !!}
 
 

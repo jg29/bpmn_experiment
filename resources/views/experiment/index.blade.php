@@ -1,15 +1,23 @@
 @extends('app')
 
 @section('content')
-    <a href="/login">Login</a>
 
 
     <div class="form">
 
-        <h1>Experiment</h1>
+        <h1>Experimente</h1>
 
-        test
+<table>
+        @forelse ($experiments as $experiment)
+        <tr>
+            <td>{{ $experiment->title }}</td>
+            <td><a href="experiment/{{ $experiment->id }}/edit">edit</a></td>
+        </tr>
+        @empty
+            <tr><td>Keine eigenen Experimente</td></tr>
+        @endforelse
+</table>
 
-
+        <a href="experiment/create">Neues Experiment</a>
     </div>
 @stop

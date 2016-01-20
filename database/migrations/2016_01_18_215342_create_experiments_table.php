@@ -14,7 +14,7 @@ class CreateExperimentsTable extends Migration
     {
         Schema::create('experiments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('editor');
+            $table->integer('user_id');
             $table->integer('group');
             $table->string('title');
             $table->text('text');
@@ -22,10 +22,6 @@ class CreateExperimentsTable extends Migration
             $table->string('key');
             $table->timestamps();
 
-            $table->foreign('editor')
-                ->reference('id')
-                ->on('users')
-                ->onDelete('cascade');
 
         });
     }
