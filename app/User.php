@@ -37,7 +37,6 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
-
     /**
      * Experimente eines Users anzeigen
      *
@@ -46,7 +45,6 @@ class User extends Model implements AuthenticatableContract,
     public function experiments() {
 
         return $this->hasMany('App\Experiment');
-
 
     }
 

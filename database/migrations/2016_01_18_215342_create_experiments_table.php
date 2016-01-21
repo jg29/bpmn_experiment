@@ -18,7 +18,7 @@ class CreateExperimentsTable extends Migration
             $table->integer('group');
             $table->string('title');
             $table->text('text');
-            $table->integer('element');
+            $table->integer('element_id')->nullable();
             $table->string('key');
             $table->timestamps();
 

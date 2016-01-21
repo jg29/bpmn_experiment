@@ -1,0 +1,174 @@
+body {
+    font-family: sans-serif;
+
+
+}
+
+.wrapper {
+    width: 850px;
+}
+
+.canvas{
+    width: 100%;
+
+}
+
+.menu {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+
+}
+.menu li {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin:0px !important;
+}
+.menu img{
+    display: none;
+}
+
+.ui-sortable-handle, .canvas .ui-draggable-handle {
+    width:auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    margin-top: 30px;
+    padding:10px;
+    text-align: center;
+    word-wrap: break-word;
+    height: auto;
+}
+.survey {
+    background-color: #ace5fc;
+}
+.canvas > .xor {
+    border: 0px !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    margin-top: 30px !important;
+    height: auto !important;
+}
+.xor table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.xor table td {
+
+    overflow: hidden;
+    width: 20%;
+    background-position:50% 0 !important;
+    text-align: center;
+}
+
+.xor table span{
+    display: block;
+    margin: 5px;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.xor table a{
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 5px;
+    padding: 5px;
+    width: 15px;
+    height: 15px;
+    background-color: green;
+    color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+    text-align: center;
+}
+
+
+.edit {
+    background-color: #cafcc2;
+}
+.feedback {
+    background-color: #fec900;
+}
+.canvas > .feedback, .canvas > .message, .canvas > .edit, .canvas > .survey  {
+    margin-left: 150px !important;
+    margin-right: 150px !important;
+}
+.message {
+    background-color: #fdfbc1;
+}
+
+.arrow {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: -8px;
+
+}
+.canvas ul {
+    min-height: 50px;
+}
+.xor .arrow {
+    margin-top: 0px;
+}
+.start{
+    display: inline-block;
+    margin-left: calc(50% - 20px);
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 20px;
+
+}
+.start .arrow {
+    margin-top: 15px;
+
+}
+.ende {
+    display: inline-block;
+    margin-left: calc(50% - 20px);
+    width: 17px;
+    height: 17px;
+    border: 3px solid black;
+    border-radius: 20px;
+    margin-top: 24px;
+    margin-bottom: 100px;
+
+}
+
+ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+li { margin: 5px; padding: 5px; width: 160px; }
+ul li:last-child img {
+    display:none;
+}
+
+
+.popup {
+
+    position: absolute;
+    width: 600px;
+    min-height: 300px;
+    border: 1px solid black;
+    border-radius: 15px;
+    left:50%;
+    top: 50px;
+    margin-left: -300px;
+    background-color: white;
+    z-index: 10;
+    padding: 10px;
+
+
+}
+.konsole {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    width: 40%;
+    height: 300px;
+    border: 1px solid black;
+    padding: 5px;
+}

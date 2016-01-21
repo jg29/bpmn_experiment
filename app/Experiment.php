@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Experiment extends Model
 {
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'title',
         'text',
-        'element',
+        'element_id',
         'key'
     ];
 
@@ -21,7 +24,16 @@ class Experiment extends Model
      */
     public function user() {
 
-        return $this->belongsTo('App/User');
+        return $this->belongsTo('App\eeUser');
 
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function element() {
+
+        return $this->belongsTo('App\Element');
+    }
+
 }

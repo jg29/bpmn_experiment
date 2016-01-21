@@ -68,8 +68,13 @@ class ExperimentController extends Controller
      */
     public function edit($id)
     {
+
         $experiment = Experiment::findOrFail($id);
-        return view('experiment.edit', compact('experiment'));
+
+        $element =  $experiment->element()->first();
+
+        //return dd($element->next());
+        return view('experiment.edit', compact('experiment','element'));
     }
 
     /**
