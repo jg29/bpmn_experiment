@@ -31,9 +31,15 @@
 
     </div>
 
+
     <ul class="menu">
-        <li class="insert survey"><div>Survey</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-        <li class="insert xor" id="xor">
+        <li typ="1" class="insert message"><div>Message</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+        <li typ="2" class="insert survey"><div>Survey</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+        <li typ="3" class="insert edit"><div>Modelierung</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+        <li typ="4" class="insert feedback"><div>Feedback</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+
+<!--
+        <li type="5" class="insert xor" id="xor">
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td width="20%" style="background:url('{{ @url('img/XORl.png') }}');height:60px;">&nbsp;</td>
@@ -57,9 +63,10 @@
                     <td width="20%" style="background:url('{{ @url('img/XORrr.png') }}')">&nbsp;</td>
                 </tr>
             </table>
-            <img class="arrow" src="arrow.png" />
+            <img class="arrow" src="{{ @url('img/arrow.png') }}" />
         </li>
-        <li class="insert xor">
+        -->
+        <li typ="5" class="insert xor">
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td width="20%" style="background:url('{{ @url('img/XORl.png') }}');height:60px;">&nbsp;</td>
@@ -93,22 +100,22 @@
                     <td width="20%" style="background:url('{{ @url('img/XORrr.png') }}')">&nbsp;</td>
                 </tr>
             </table>
-            <img class="arrow" src="arrow.png" />
+            <img class="arrow" src="{{ @url('img/arrow.png') }}" />
         </li>
-        <li class="insert edit"><div>Modelierung</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-        <li class="insert feedback"><div>Feedback</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-        <li class="insert message"><div>Message</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-    </ul>
+            </ul>
 
     <div class="wrapper">
         <ul class="canvas">
             <li class="start" id="start"><div>&nbsp;</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
             @if($element)
-                <li id="element{{$element->id }}" class="{{ $element->getClass() }}" ><div>{!! $element->title !!}</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+                <li id="{{$element->id }}" class="{{ $element->getClass() }}" ><div>{!! $element->title !!}</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+
+                @while($element = $element->next())
+                    <li id="{{$element->id }}" class="{{ $element->getClass() }}"><div>{!! $element->title !!}</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+                @endwhile
+
             @endif
-            @while($element = $element->next())
-                <li id="element{{$element->id }} "class="{{ $element->getClass() }}"><div>{!! $element->title !!}</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-            @endwhile
+
 
 
 
@@ -118,6 +125,15 @@
             <li class="ende" id="ende"><div>&nbsp;</div></li>
         </ul>
     </div>
+
+    {!! Form::open(array('url' => 'element', 'method' => 'post', 'class'=>'new')) !!}
+        {!! Form::hidden('title') !!}
+        {!! Form::hidden('type') !!}
+    {!! Form::close() !!}
+
+    {!! Form::open(array('url' => 'element', 'method' => 'post', 'class'=>'order')) !!}
+    {!! Form::hidden('order') !!} {!! Form::hidden('experiment', $experiment->id) !!}
+    {!! Form::close() !!}
 
 
     <div class="konsole"></div>
