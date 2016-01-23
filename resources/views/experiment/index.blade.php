@@ -12,15 +12,19 @@
                     <tr>
                         <th>Titel des Experimentes</th>
                         <th>Key</th>
-                        <th colspan="2" width="50">Bearbeiten</th>
+                        <th colspan="2">Bearbeiten</th>
                     </tr>
                 </thead>
                     @forelse ($experiments as $experiment)
                     <tr>
                         <td>{{ $experiment->title }}</td>
                         <td>{{ $experiment->key }}</td>
-                        <td><a href="experiment/{{ $experiment->id }}/edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                        <td><a href="experiment/{{ $experiment->id }}/edit"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                        <td width="10"><a href="experiment/{{ $experiment->id }}/edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+                        <td width="10">
+                            {!! Form::open(array('route' => array('experiment.destroy', $experiment->id), 'method' => 'delete')) !!}
+                                <a href="#" onclick="if(confirm('Experiment löschen?')) {$(this).parent().submit()} else {return false;}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            {!! Form::close()  !!}
+                        </td>
                     </tr>
                     @empty
                         <tr><td>Keine eigenen Experimente</td></tr>

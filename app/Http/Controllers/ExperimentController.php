@@ -43,7 +43,9 @@ class ExperimentController extends Controller
      */
     public function store(ExperimentRequest $request)
     {
-        Auth::user()->experiments()->save(new Experiment($request->all()));
+        $experiment = new Experiment($request->all());
+        $experiment->key = $rest = substr(bcrypt(($request->title).random_bytes(5)), -6);
+        Auth::user()->experiments()->save($experiment);
 
         return redirect('experiment');
     }
@@ -101,6 +103,8 @@ class ExperimentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $experiment = Experiment::findOrFail($id);
+        $experiment->delete();
+        return redirect('experiment');
     }
 }

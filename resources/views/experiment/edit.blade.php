@@ -16,7 +16,7 @@
     <div class="form container" style="display: none;">
 
         <h3>Experiment bearbeiten</h3>
-        {!! Form::model($experiment,array('url' => 'experiment/'.$experiment->id, 'method' => 'patch','class'=>'form-horizontal')) !!}
+        {!! Form::model($experiment ,array('url' => 'experiment/'.$experiment->id, 'method' => 'patch','class'=>'form-horizontal')) !!}
             @include('experiment.form',['submitButtonText'=>'Bearbeiten'])
         {!! Form::close() !!}
 

@@ -13,11 +13,12 @@
 }
 
 .menu li {
+    cursor: pointer;
     border: 1px solid black;
     border-radius: 10px;
     margin:0px !important;
     box-sizing:unset;
-    margin: 5px; padding: 5px; width: 160px;
+    margin: 5px; padding: 5px; width: auto;
 }
 .menu img{
     display: none;
@@ -35,6 +36,7 @@
     height: auto;
     box-sizing:unset;
     list-style: none;
+    cursor: pointer;
 }
 .survey {
     background-color: #ace5fc;
