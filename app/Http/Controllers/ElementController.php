@@ -80,7 +80,7 @@ class ElementController extends Controller
     {
         $element = Element::findOrFail($id);
         $element->update($request->all());
-        return 'ok';
+        return ($_POST['title']);
 
     }
 

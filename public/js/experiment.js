@@ -10,24 +10,20 @@ function save() {
     var wert = '';
 
     $('.canvas > li').each(function () {
-        text += $(this).attr("id")+" -> ";
+
         if($(this).attr("id") != undefined && $(this).attr("id")!= 'start' && $(this).attr("id") != 'ende'){
             wert+=$(this).attr("id")+',';
+            text += wert+'<br>';
         }
 
     });
 
     $('.order input[name=order]').val(wert);
     var data = $(".order").serialize();
-
-
     $.ajax({
         type: "POST",
         url: $('.order').attr('action'),
-        data: data,
-        success: function(msg){
-   //         alert( msg );
-        }
+        data: data
     });
 
     text += "<br>";
@@ -77,12 +73,12 @@ $(function() {
                 url: $('.new').attr('action'),
                 data: data,
                 success: function(msg){
-                    $copy.attr('id', msg)
+                    $copy.attr('id', msg);
                     ordering();
                     save();
                 }
             });
-
+            $copy.click(sidebar);
             $('.add').click(function() {
                 $(".popup").fadeIn(100);
                 var self = $(this);
@@ -101,12 +97,32 @@ $(function() {
     };
     var sidebar = function () {
         //alert($(this).attr('id'))
-
+        var id = $(this).attr('id');
         $.ajax({
             type: "GET",
-            url: 'element/'+$(this).attr('id')+'/edit',
+            url: '/element/'+id+'/edit',
             success: function(msg) {
                 $('.sidepanel').html(msg);
+
+                $('.element'+id).submit(function() {
+                    var $data = $('.element'+id).serialize();
+
+                    $.ajax({
+                        type: "POST",
+                        url: $('.element'+id).attr('action'),
+                        data: $data,
+                        success: function(msg){
+                            $('#'+id+' div').text(msg);
+                        }
+                    });
+                    return false;
+                })
+                $('.element'+id+' .delete').click(function() {
+                    $('#'+id).remove();
+                    ordering();
+                    save();
+                })
+
             }
         });
 
@@ -118,7 +134,5 @@ $(function() {
 
     $( ".insert" ).draggable(drag);
     $( "ul, li" ).disableSelection();
-
-
 
 });

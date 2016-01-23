@@ -143,8 +143,8 @@
 
 
     {!! Form::open(array('url' => 'element', 'method' => 'post', 'class'=>'new')) !!}
-        {!! Form::text('title') !!}
-        {!! Form::text('type') !!}
+        {!! Form::hidden('title') !!}
+        {!! Form::hidden('type') !!}
     {!! Form::close() !!}
 
     {!! Form::open(array('url' => 'element/order', 'method' => 'post', 'class'=>'order')) !!}
