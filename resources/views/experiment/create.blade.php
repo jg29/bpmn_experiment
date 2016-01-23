@@ -3,11 +3,11 @@
 @section('content')
 
 
-    <div class="form">
+    <div class="container">
 
-        <h1>Neues Experiment</h1>
+        <h2>Neues Experiment</h2>
 
-        {!! Form::open(array('url' => 'experiment', 'method' => 'post')) !!}
+        {!! Form::open(array('url' => 'experiment', 'method' => 'post','class'=>'form-horizontal')) !!}
             @include('experiment.form',['submitButtonText'=>'Erstellen'])
         {!! Form::close() !!}
 

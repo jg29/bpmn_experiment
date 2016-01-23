@@ -14,6 +14,8 @@
 Route::get('/', "PagesController@home");
 
 Route::resource('experiment','ExperimentController');
+Route::post('element/order','ElementController@order');
+Route::resource('element','ElementController');
 
 
 // Authentication routes...

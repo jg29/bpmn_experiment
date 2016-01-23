@@ -15,6 +15,16 @@ class Element extends Model
 
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'content',
+        'element_id',
+        'type'
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function experiment()

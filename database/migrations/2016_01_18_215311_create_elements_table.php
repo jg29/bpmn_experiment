@@ -16,7 +16,7 @@ class CreateElementsTable extends Migration
             $table->increments('id');
             $table->integer('type');
             $table->string('title');
-            $table->text('Content');
+            $table->text('content');
             $table->integer('ref');
             $table->integer('element_id');
             $table->timestamps();

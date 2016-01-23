@@ -1,29 +1,23 @@
-body {
-    font-family: sans-serif;
-
-
-}
 
 .wrapper {
     width: 850px;
 }
 
-.canvas{
-    width: 100%;
-
+#content {
+    width: 99%;
+    padding: 10px;
 }
-
 .menu {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    width: 200px;
-
+    list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px;
+    box-sizing:unset;
 }
+
 .menu li {
     border: 1px solid black;
     border-radius: 10px;
     margin:0px !important;
+    box-sizing:unset;
+    margin: 5px; padding: 5px; width: 160px;
 }
 .menu img{
     display: none;
@@ -39,6 +33,8 @@ body {
     text-align: center;
     word-wrap: break-word;
     height: auto;
+    box-sizing:unset;
+    list-style: none;
 }
 .survey {
     background-color: #ace5fc;
@@ -107,10 +103,11 @@ body {
     position: absolute;
     margin-top: 11px;
     margin-left: -8px;
-
+    box-sizing:unset;
 }
 .canvas ul {
     min-height: 50px;
+    box-sizing:unset;
 }
 .xor .arrow {
     margin-top: 0px;
@@ -140,8 +137,7 @@ body {
 
 }
 
-ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
-li { margin: 5px; padding: 5px; width: 160px; }
+
 ul li:last-child img {
     display:none;
 }
@@ -162,13 +158,4 @@ ul li:last-child img {
     padding: 10px;
 
 
-}
-.konsole {
-    position: fixed;
-    right: 0px;
-    bottom: 0px;
-    width: 40%;
-    height: 300px;
-    border: 1px solid black;
-    padding: 5px;
 }
