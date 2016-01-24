@@ -20,6 +20,9 @@ class ExperimentController extends Controller
      */
     public function index()
     {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
         $experiments = Auth::user()->experiments()->get();
 
         return view('experiment.index', compact('experiments'));
@@ -32,6 +35,9 @@ class ExperimentController extends Controller
      */
     public function create()
     {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
         return view('experiment.create');
     }
 
@@ -43,6 +49,9 @@ class ExperimentController extends Controller
      */
     public function store(ExperimentRequest $request)
     {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
         $experiment = new Experiment($request->all());
         $experiment->key = $rest = substr(bcrypt(($request->title).random_bytes(5)), -6);
         Auth::user()->experiments()->save($experiment);
@@ -58,6 +67,9 @@ class ExperimentController extends Controller
      */
     public function show($id)
     {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
         $experiment = Experiment::findOrFail($id);
         return view('experiment.show', compact('experiment'));
     }
@@ -70,7 +82,9 @@ class ExperimentController extends Controller
      */
     public function edit($id)
     {
-
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
         $experiment = Experiment::findOrFail($id);
 
         $element =  $experiment->element()->first();
@@ -88,6 +102,9 @@ class ExperimentController extends Controller
      */
     public function update(ExperimentRequest $request, $id)
     {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
         $experiment = Experiment::findOrFail($id);
 
         $experiment->update($request->all());
@@ -103,6 +120,9 @@ class ExperimentController extends Controller
      */
     public function destroy($id)
     {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
         $experiment = Experiment::findOrFail($id);
         $experiment->delete();
         return redirect('experiment');

@@ -9,19 +9,7 @@
 
 @section('content')
 
-    <h2>Bearbeite: {!! $experiment->title !!}<small> <a href="#" onclick="$('.form').toggle(200); return false"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></small></h2>
 
-
-
-    <div class="form container" style="display: none;">
-
-        <h3>Experiment bearbeiten</h3>
-        {!! Form::model($experiment ,array('url' => 'experiment/'.$experiment->id, 'method' => 'patch','class'=>'form-horizontal')) !!}
-            @include('experiment.form',['submitButtonText'=>'Bearbeiten'])
-        {!! Form::close() !!}
-
-        @include('errors.list')
-    </div>
 
 
     <div class="popup" style="display:none">
@@ -38,93 +26,61 @@
 
         <div class="col-md-1">
             <ul class="menu">
-                <li typ="1" class="insert message"><div>Message</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-                <li typ="2" class="insert survey"><div>Survey</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-                <li typ="3" class="insert edit"><div>Modelierung</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-                <li typ="4" class="insert feedback"><div>Feedback</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
-                <li typ="5" class="insert xor" id="xor">
-                    <table cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td width="20%" style="background:url('{{ @url('img/XORl.png') }}');height:60px;">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORc.png') }}')">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORr.png') }}')">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width="20%" align="center">
-                                <a class="add" href="#">+</a>
-                            </td>
-                            <td width="20%" align="center">
-                                <a class="add" href="#">+</a>
-                            </td>
-                            <td width="20%" align="center">
-                                <a class="add" href="#">+</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="20%" style="background:url('{{ @url('img/XORll.png') }}');height:60px;">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORcc.png') }}')">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORrr.png') }}')">&nbsp;</td>
-                        </tr>
-                    </table>
-                    <img class="arrow" src="{{ @url('img/arrow.png') }}" />
+                <li typ="1" class="insert message"><div>Message</div></li>
+                <li typ="2" class="insert survey"><div>Survey</div></li>
+                <li typ="3" class="insert edit"><div>Model</div></li>
+                <li typ="4" class="insert feedback"><div>Feedback</div></li>
+                <li typ="5" class="insert xor" ><div class="num1"><span><p>XOR</p></span></div>
                 </li>
-                <!--
-                <li typ="5" class="insert xor">
-                    <table cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td width="20%" style="background:url('{{ @url('img/XORl.png') }}');height:60px;">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORm.png') }}')">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORc.png') }}')">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORm.png') }}')">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORr.png') }}')">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width="20%" align="center">
-                                <a class="add" href="#">+</a>
-                            </td>
-                            <td width="20%" align="center">
-                                <a class="add" href="#">+</a>
-                            </td>
-                            <td width="20%" align="center">
-                                <a class="add" href="#">+</a>
-                            </td>
-                            <td width="20%" align="center">
-                                <a class="add" href="#">+</a>
-                            </td>
-                            <td width="20%" align="center">
-                                <a class="add" href="#">+</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="20%" style="background:url('{{ @url('img/XORll.png') }}');height:60px;">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORmm.png') }}')">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORcc.png') }}')">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORmm.png') }}')">&nbsp;</td>
-                            <td width="20%" style="background:url('{{ @url('img/XORrr.png') }}')">&nbsp;</td>
-                        </tr>
-                    </table>
-                    <img class="arrow" src="{{ @url('img/arrow.png') }}" />
-                </li>
-                -->
             </ul>
         </div>
-        <div class="col-md-7">
-            <div class="wrapper">
+        <div class="col-md-6 main">
+            <h3>Bearbeite: {!! $experiment->title !!}<small> <a href="#" onclick="$('.form').toggle(200); return false"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></small></h3>
+
+
+
+            <div class="form container" style="display: none;">
+{!! Form::model($experiment ,array('url' => 'experiment/'.$experiment->id, 'method' => 'patch','class'=>'form-horizontal')) !!}
+                @include('experiment.form',['submitButtonText'=>'Bearbeiten'])
+                {!! Form::close() !!}
+
+                @include('errors.list')
+            </div>
                 <ul class="canvas">
-                    <li class="start" id="start"><div>&nbsp;</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+                    <li class="start" id="start"><div>&nbsp;</div></li>
                     @if($element)
-                        <li id="{{$element->id }}" class="{{ $element->getClass() }}" ><div>{!! $element->title !!}</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+                        <li id="{{$element->id }}" class="{{ $element->getClass() }}" ><div>{!! $element->title !!}</div></li>
 
                         @while($element = $element->next())
-                            <li id="{{$element->id }}" class="{{ $element->getClass() }}"><div>{!! $element->title !!}</div><img class="arrow" src="{{ @url('img/arrow.png') }}" /></li>
+                            @if($element->type == 5)
+                                <li id="{{$element->id }}" class="{{ $element->getClass() }}">
+                                    <hr>
+                                    @if(count($element->fields) == 0)
+                                        <div class="num3">
+                                            <span><p style="background-color:white;">leer</p></span>
+                                        </div>
+                                    @else
+                                        <div class="num{{count($element->fields)}}">
+                                            @foreach($element->fields as $field)
+                                                <span><p>{{$field->name}}</p></span>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    <hr>
+                                </li>
+                            @else
+                                <li id="{{$element->id }}" class="{{ $element->getClass() }}"><div>{!! $element->title !!}</div></li>
+
+
+                            @endif
                         @endwhile
 
                     @endif
                     <li class="ende" id="ende"><div>&nbsp;</div></li>
                 </ul>
-            </div>
+
         </div>
-        <div class="col-md-4 sidepanel">
+        <div class="col-md-5 sidepanel">
             kein Element ausgewählt
 
 

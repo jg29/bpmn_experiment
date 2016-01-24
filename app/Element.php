@@ -24,23 +24,9 @@ class Element extends Model
         'type'
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function experiment()
-    {
-        return $this->hasOne('App\Experiment');
-    }
 
-    /**
-     * Experimente eines Users anzeigen
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function prev()
-    {
-        return $this->belongsTo('App\Element', 'element_id');
-    }
+
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -55,7 +41,7 @@ class Element extends Model
      */
     public function fields()
     {
-        return $this->belongsTo('App\Field');
+        return $this->hasMany('App\Field')->orderBy('sort', 'ASC');
     }
 
     public function getClass() {

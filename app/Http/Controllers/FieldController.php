@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Experiment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Element;
+use App\Field;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ElementController extends Controller
+class FieldController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,8 +27,7 @@ class ElementController extends Controller
      */
     public function create()
     {
-        //$this->save(new Experiment($request->all()));
-
+        //
     }
 
     /**
@@ -44,9 +41,19 @@ class ElementController extends Controller
         if (!Auth::check()) {
             return redirect('/auth/login');
         }
-        $id = Element::create($request->all())->id;
 
-        return $id;
+        $field = new Field();
+        $field->element_id = $request->element_id;
+        $field->type = $request->type;
+        $field->name = $request->name;
+        $field->settings = $request->settings;
+        $f = Field::orderBy('sort', 'DESC')->first();
+
+        $field->sort = $f->sort+1;
+        $field->save();
+
+
+        return $request->element_id;
     }
 
     /**
@@ -68,17 +75,7 @@ class ElementController extends Controller
      */
     public function edit($id)
     {
-        if (!Auth::check()) {
-            return redirect('/auth/login');
-        }
-        $element = Element::findOrFail($id);
-        if($element->type == Element::SURVAY || $element->type == Element::XORs ) {
-            $fields = $element->fields;
-            return view('element.edit', compact('element','fields'));
-        }
-
-
-        return view('element.edit', compact('element'));
+        //
     }
 
     /**
@@ -93,9 +90,9 @@ class ElementController extends Controller
         if (!Auth::check()) {
             return redirect('/auth/login');
         }
-        $element = Element::findOrFail($id);
-        $element->update($request->all());
-        return $element->id;
+        $field = Field::findOrFail($id);
+        $field->update($request->all());
+        return $field->element_id;
 
     }
 
@@ -107,28 +104,55 @@ class ElementController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-
-    public function order(Request $request) {
         if (!Auth::check()) {
             return redirect('/auth/login');
         }
-        $order = explode(",",$_POST['order']);
-
-        $experiment = Experiment::find($_POST['experiment']);
-        $experiment->element_id = $order[0];
-        $experiment->save();
-        for($i=0; $i<count($order)-1;$i++) {
-            $element = Element::find($order[$i]);
-            $element->element_id = $order[$i+1];
-            $element->save();
-        }
-
-        return "ok";
+        $field = Field::findOrFail($id);
+        $r = $field->element_id;
+        $field->delete();
+        return $r;
     }
 
+    public function up() {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
+        $eid = $_GET['eid'];
 
+        $vor = Field::findOrFail($_GET['id']);
+        $sortvor = $vor->sort;
+
+        $next = Field::where('sort', '<', $sortvor)->orderBy('sort', 'DESC')->where('element_id', $eid)->first();
+        $sortnext = $next->sort;
+
+        $vor->sort = $sortnext;
+        $next->sort = $sortvor;
+        $vor->save();
+        $next->save();
+
+
+        return $next;
+    }
+
+    public function down() {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
+        $eid = $_GET['eid'];
+
+        $vor = Field::findOrFail($_GET['id']);
+        $sortvor = $vor->sort;
+
+        $next = Field::where('sort', '>', $sortvor)->orderBy('sort', 'ASC')->where('element_id', $eid)->first();
+        $sortnext = $next->sort;
+
+        $vor->sort = $sortnext;
+        $next->sort = $sortvor;
+        $vor->save();
+        $next->save();
+
+
+        return $next;
+    }
 
 }

@@ -1,36 +1,79 @@
-
-function ordering() {
+function save() {
     $(".canvas").append($(".canvas .ende"));
     $(".canvas").prepend($(".canvas .start"))
-
-}
-
-function save() {
-    var text = $('.konsole').html();
     var wert = '';
-
     $('.canvas > li').each(function () {
-
         if($(this).attr("id") != undefined && $(this).attr("id")!= 'start' && $(this).attr("id") != 'ende'){
             wert+=$(this).attr("id")+',';
-            text += wert+'<br>';
         }
-
     });
-
     $('.order input[name=order]').val(wert);
     var data = $(".order").serialize();
     $.ajax({
         type: "POST",
         url: $('.order').attr('action'),
-        data: data
+        data: data,
+        success: function() {
+
+        }
     });
-
-    text += "<br>";
-
-
-    $('.konsole').html(text);
-
+}
+function sidebar(id) {
+    $.ajax({
+        type: "GET",
+        url: '/element/'+id+'/edit',
+        success: function(msg) {
+            $('.sidepanel').html(msg);
+            $('.sidepanel .up').click(function() {
+                $.ajax({
+                    type: "GET",
+                    url: '/field/up',
+                    data: { id: $(this).attr('id'), eid:id},
+                    success: function(msg){
+                        sidebar(id);
+                        if($('#'+id).hasClass('xor')) {
+                            window.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+            $('.sidepanel .down').click(function() {
+                $.ajax({
+                    type: "GET",
+                    url: '/field/down',
+                    data: { id: $(this).attr('id'), eid:id},
+                    success: function(msg){
+                        sidebar(id);
+                        if($('#'+id).hasClass('xor')) {
+                            window.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+            $('.sidepanel form').submit(function() {
+                var $data = $(this).serialize();
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr('action'),
+                    data: $data,
+                    success: function(msg){
+                        $('#'+id+' div').text($('.element'+id+' input[name=title]').val());
+                        sidebar(id);
+                        if($('#'+id).hasClass('xor')) {
+                            window.location.reload();
+                        }
+                    }
+                });
+                return false;
+            })
+            $('.element'+id+' .delete').click(function() {
+                $('#'+id).remove();
+                save();
+            })
+        }
+    });
 }
 
 $(function() {
@@ -42,7 +85,6 @@ $(function() {
         },
         stop: function() {
             $(".arrow").css("visibility","");
-            ordering();
             save();
         },
     };
@@ -62,7 +104,11 @@ $(function() {
             $copy.css("width","auto")
 
             var id = $(this).attr('typ')
-            var name = prompt("Bitte Name eingeben:");
+            if (id == 5) {
+                var name = 'XOR';
+            } else{
+                var name = prompt("Bitte Name eingeben:");
+            }
             $copy.find('div').text(name);
             $('.new input[name=title]').val(name);
             $('.new input[name=type]').val(id);
@@ -74,11 +120,14 @@ $(function() {
                 data: data,
                 success: function(msg){
                     $copy.attr('id', msg);
-                    ordering();
+                    $copy.css('height','');
                     save();
                 }
             });
-            $copy.click(sidebar);
+            $copy.click(function() {
+                var id = $(this).attr('id')
+                sidebar(id)
+            });
             $('.add').click(function() {
                 $(".popup").fadeIn(100);
                 var self = $(this);
@@ -92,46 +141,13 @@ $(function() {
                 });
                 return false;
             });
-            ordering();
         }
     };
-    var sidebar = function () {
-        //alert($(this).attr('id'))
-        var id = $(this).attr('id');
-        $.ajax({
-            type: "GET",
-            url: '/element/'+id+'/edit',
-            success: function(msg) {
-                $('.sidepanel').html(msg);
-
-                $('.element'+id).submit(function() {
-                    var $data = $('.element'+id).serialize();
-
-                    $.ajax({
-                        type: "POST",
-                        url: $('.element'+id).attr('action'),
-                        data: $data,
-                        success: function(msg){
-                            $('#'+id+' div').text(msg);
-                        }
-                    });
-                    return false;
-                })
-                $('.element'+id+' .delete').click(function() {
-                    $('#'+id).remove();
-                    ordering();
-                    save();
-                })
-
-            }
-        });
-
-
-    }
-
     $( ".canvas" ).sortable(sort);
-    $( ".canvas li" ).click(sidebar);
-
+    $( ".canvas li" ).click(function() {
+        var id = $(this).attr('id')
+        sidebar(id)
+    });
     $( ".insert" ).draggable(drag);
     $( "ul, li" ).disableSelection();
 

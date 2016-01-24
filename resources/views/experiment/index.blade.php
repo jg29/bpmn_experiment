@@ -27,7 +27,7 @@
                         </td>
                     </tr>
                     @empty
-                        <tr><td>Keine eigenen Experimente</td></tr>
+                        <tr><td colspan="4">Keine eigenen Experimente</td></tr>
                     @endforelse
             </table>
 
