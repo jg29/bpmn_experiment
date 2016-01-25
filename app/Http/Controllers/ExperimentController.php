@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Field;
 use App\Experiment;
 use App\Element;
 use Illuminate\Http\Request;
@@ -76,13 +77,25 @@ class ExperimentController extends Controller
         return view('experiment.show', compact('experiment','element'));
     }
 
-    public function element($id, $field) {
+    public function element($id, $element) {
         $experiment = Experiment::where("key", $id)->first();
         if($experiment == null) {
             return redirect('/');
         }
-        $element =  Element::find($field);
-        return view('experiment.element', compact('experiment','element'));
+        $element =  Element::find($element);
+
+        if($element->type == 5) {
+            $fieldnr = session("field");
+            $field_id = substr($fieldnr, 0,-2);
+            $field_type = substr($fieldnr, -2);
+
+            $field = Field::where('id',$field_id)->where('type',$field_type)->first();
+
+        }
+
+
+
+        return view('experiment.element', compact('experiment','element', 'field'));
     }
 
     /**

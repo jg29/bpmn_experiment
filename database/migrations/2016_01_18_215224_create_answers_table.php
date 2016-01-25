@@ -16,6 +16,7 @@ class CreateAnswersTable extends Migration
             $table->increments('id');
             $table->integer('element');
             $table->integer('field');
+            $table->integer('student');
             $table->string('value');
             $table->timestamps();
         });

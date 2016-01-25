@@ -3,20 +3,24 @@
 @section('content')
 
     <div class="container">
-        <h2>{{ $element->title }}</h2>
-        <p>{{ $element->content }}</p>
         @if($element->type == 1)
+            <h2>{{ $element->title }}</h2>
+            <p>{{ $element->content }}</p>
+
             @if($element->next() != null)
                 <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
             @else
-                <a class="btn btn-default" href="/experiment/{{$experiment->key}}">weiter</a>
+                <a class="btn btn-default" href="/danke">weiter</a>
             @endif
         @elseif($element->type == 2)
+            <h2>{{ $element->title }}</h2>
+            <p>{{ $element->content }}</p>
+
             {!! Form::open(array('url' => "/experiment/".$experiment->key."/".$element->id.'/save', 'method' => 'post','class'=>'form-horizontal')) !!}
                 @if($element->next() != null)
                 {!! Form::hidden("url", "/experiment/".$experiment->key."/".$element->next()->id) !!}
                 @else
-                    {!! Form::hidden("url", "/experiment/".$experiment->key) !!}
+                    {!! Form::hidden("url", "/danke") !!}
                 @endif
             @foreach($element->fields as $field)
                     <div class="form-group">
@@ -47,25 +51,35 @@
                 </div>
             {!! Form::close() !!}
         @elseif($element->type == 3)
+            <h2>{{ $element->title }}</h2>
+            <p>{{ $element->content }}</p>
+
             TODO Model
             @if($element->next() != null)
                 <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
             @else
-                <a class="btn btn-default" href="/experiment/{{$experiment->key}}">weiter</a>
+                <a class="btn btn-default" href="/danke">weiter</a>
             @endif
         @elseif($element->type == 4)
+            <h2>{{ $element->title }}</h2>
+            <p>{{ $element->content }}</p>
+
             TODO Feedback
             @if($element->next() != null)
                 <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
             @else
-                <a class="btn btn-default" href="/experiment/{{$experiment->key}}">weiter</a>
+                <a class="btn btn-default" href="/danke">weiter</a>
             @endif
         @elseif($element->type == 5)
-            TODO XOR
+            <h2>Aufgabe</h2>
+
+            <p>{{ $field->settings }}</p>
+
+
             @if($element->next() != null)
                 <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
             @else
-                <a class="btn btn-default" href="/experiment/{{$experiment->key}}">weiter</a>
+                <a class="btn btn-default" href="/danke">weiter</a>
             @endif
         @endif
 

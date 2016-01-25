@@ -12,6 +12,8 @@
 */
 
 Route::get('/', "PagesController@home");
+Route::get('/danke', "PagesController@danke");
+Route::get('/test', "PagesController@test");
 Route::post('/', "PagesController@redirect");
 
 Route::resource('experiment','ExperimentController');
