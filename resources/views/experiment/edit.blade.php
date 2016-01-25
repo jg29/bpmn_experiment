@@ -30,8 +30,7 @@
                 <li typ="2" class="insert survey"><div>Survey</div></li>
                 <li typ="3" class="insert edit"><div>Model</div></li>
                 <li typ="4" class="insert feedback"><div>Feedback</div></li>
-                <li typ="5" class="insert xor" ><div class="num1"><span><p>XOR</p></span></div>
-                </li>
+                <li typ="5" class="insert xor" ><div class="num1"><hr><span><p>XOR</p></span><hr></div></li>
             </ul>
         </div>
         <div class="col-md-6 main">
@@ -46,7 +45,7 @@
 
                 @include('errors.list')
             </div>
-                <ul class="canvas">
+                <ul class="canvas" key="{{ $experiment->key }}">
                     <li class="start" id="start"><div>&nbsp;</div></li>
                     @if($element)
                         <li id="{{$element->id }}" class="{{ $element->getClass() }}" ><div>{!! $element->title !!}</div></li>
@@ -54,19 +53,22 @@
                         @while($element = $element->next())
                             @if($element->type == 5)
                                 <li id="{{$element->id }}" class="{{ $element->getClass() }}">
-                                    <hr>
                                     @if(count($element->fields) == 0)
-                                        <div class="num3">
-                                            <span><p style="background-color:white;">leer</p></span>
+                                        <div class="num1">
+                                            <hr>
+                                            <span><p style="background-color:#d9534f;color: white">bitte Bearbeiten</p></span>
+                                            <hr>
                                         </div>
                                     @else
                                         <div class="num{{count($element->fields)}}">
+                                            <hr>
                                             @foreach($element->fields as $field)
                                                 <span><p>{{$field->name}}</p></span>
                                             @endforeach
+                                            <hr>
                                         </div>
                                     @endif
-                                    <hr>
+
                                 </li>
                             @else
                                 <li id="{{$element->id }}" class="{{ $element->getClass() }}"><div>{!! $element->title !!}</div></li>

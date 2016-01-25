@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Experiment;
+use App\Element;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -67,11 +68,33 @@ class ExperimentController extends Controller
      */
     public function show($id)
     {
-        if (!Auth::check()) {
-            return redirect('/auth/login');
+        $experiment = Experiment::where("key", $id)->first();
+        if($experiment == null) {
+            return redirect('/');
         }
-        $experiment = Experiment::findOrFail($id);
-        return view('experiment.show', compact('experiment'));
+        $element =  $experiment->element()->first();
+        return view('experiment.show', compact('experiment','element'));
+    }
+
+    public function element($id, $field) {
+        $experiment = Experiment::where("key", $id)->first();
+        if($experiment == null) {
+            return redirect('/');
+        }
+        $element =  Element::find($field);
+        return view('experiment.element', compact('experiment','element'));
+    }
+
+    /**
+     * @param $e_id
+     * @param $f_id
+     * @param $request
+     * @return mixed
+     */
+    public function save( $e_id, $f_id,Request $request ) {
+
+
+        return redirect($request->url);
     }
 
     /**

@@ -111,7 +111,7 @@
         <thead>
         <tr>
             <th width="30%">Title</th>
-            <th width="60%">Ihalt</th>
+            <th width="60%">Text</th>
             <th width="10%">&nbsp;</th>
         </tr>
         </thead>
@@ -122,7 +122,7 @@
             <table class="table table-striped nomargin">
                 <tr>
 
-                    <td width="30%">{!! Form::text('name', null,array('class'=>'form-control input-sm')) !!}<br>Key: {{$field->id.$field->type}}</td>
+                    <td width="30%">{!! Form::text('name', null,array('class'=>'form-control input-sm')) !!}<br>Key: <span class="exkey"></span>{{$field->id.$field->type}}</td>
                     <td width="60%">
                         {!! Form::textarea('settings', null,array('class'=>'form-control input-sm','style'=>'height:100px')) !!}
                     </td>

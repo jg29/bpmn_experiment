@@ -17,13 +17,23 @@ function save() {
 
         }
     });
+    if($('.canvas .xor').length == 0) {
+        $('.menu .xor').css('display','')
+
+    } else {
+        $('.menu .xor').css('display','none')
+    }
+
 }
 function sidebar(id) {
+
     $.ajax({
         type: "GET",
         url: '/element/'+id+'/edit',
         success: function(msg) {
             $('.sidepanel').html(msg);
+            $('.exkey').text($('.canvas').attr('key')+'-')
+
             $('.sidepanel .up').click(function() {
                 $.ajax({
                     type: "GET",
@@ -77,6 +87,12 @@ function sidebar(id) {
 }
 
 $(function() {
+    if($('.canvas .xor').length == 0) {
+        $('.menu .xor').css('display','')
+
+    } else {
+        $('.menu .xor').css('display','none')
+    }
     var $copy;
     var sort = {
         revert: true,
@@ -106,10 +122,12 @@ $(function() {
             var id = $(this).attr('typ')
             if (id == 5) {
                 var name = 'XOR';
+                $copy.find('div').html('<hr><span><p style="background-color:#d9534f;color: white">bitte Bearbeiten</p></span><hr>')
             } else{
                 var name = prompt("Bitte Name eingeben:");
+                $copy.find('div').text(name);
             }
-            $copy.find('div').text(name);
+
             $('.new input[name=title]').val(name);
             $('.new input[name=type]').val(id);
 

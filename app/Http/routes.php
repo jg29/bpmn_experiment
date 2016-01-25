@@ -12,8 +12,11 @@
 */
 
 Route::get('/', "PagesController@home");
+Route::post('/', "PagesController@redirect");
 
 Route::resource('experiment','ExperimentController');
+Route::get('experiment/{key}/{id}','ExperimentController@element');
+Route::post('experiment/{key}/{id}/save','ExperimentController@save');
 Route::post('element/order','ElementController@order');
 Route::resource('element','ElementController');
 Route::get('field/up','FieldController@up');
