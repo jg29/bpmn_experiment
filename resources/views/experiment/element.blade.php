@@ -54,8 +54,19 @@
             <h2>{{ $element->title }}</h2>
             <p>{{ $element->content }}</p>
 
-            TODO Model
-            @if($element->next() != null)
+
+                <link rel="stylesheet" href="/modeler/dist/css/diagram-js.css" />
+                <link rel="stylesheet" href="/modeler/dist/vendor/bpmn-font/css/bpmn-embedded.css" />
+                <link rel="stylesheet" href="/modeler/app/css/app.css" />
+
+
+            <div class="content" id="#js-drop-zone">
+
+                <div class="canvas" id="js-canvas"></div>
+            </div>
+
+            <script src="/modeler/dist/index.js"></script>
+       @if($element->next() != null)
                 <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
             @else
                 <a class="btn btn-default" href="/danke">weiter</a>

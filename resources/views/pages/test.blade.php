@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>bpmn-js modeler demo</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <link rel="stylesheet" href="/modeler/dist/css/diagram-js.css" />
     <link rel="stylesheet" href="/modeler/dist/vendor/bpmn-font/css/bpmn-embedded.css" />
     <link rel="stylesheet" href="/modeler/dist/css/app.css" />
@@ -8,11 +9,7 @@
 <body>
 <div class="content" id="js-drop-zone">
 
-    <div class="message intro">
-        <div class="note">
-            Drop BPMN diagram from your desktop or <a id="js-create-diagram" href>create a new diagram</a> to get started.
-        </div>
-    </div>
+
 
     <div class="message error">
         <div class="note">
@@ -28,21 +25,7 @@
     <div class="canvas" id="js-canvas"></div>
 </div>
 
-<ul class="buttons">
-    <li>
-        download
-    </li>
-    <li>
-        <a id="js-download-diagram" href title="download BPMN diagram">
-            BPMN diagram
-        </a>
-    </li>
-    <li>
-        <a id="js-download-svg" href title="download as SVG image">
-            SVG image
-        </a>
-    </li>
-</ul>
+
 
 <script src="modeler/dist/index.js"></script>
 </html>
