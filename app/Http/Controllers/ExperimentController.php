@@ -13,6 +13,10 @@ use App\Http\Requests\ExperimentRequest;
 
 use App\Http\Controllers\Controller;
 
+/**
+ * Class ExperimentController
+ * @package App\Http\Controllers
+ */
 class ExperimentController extends Controller
 {
     /**
@@ -58,7 +62,7 @@ class ExperimentController extends Controller
         $experiment->key = $rest = substr(bcrypt(($request->title).random_bytes(5)), -6);
         Auth::user()->experiments()->save($experiment);
 
-        return redirect('experiment');
+        return redirect('experiment/'.$experiment->id."/edit");
     }
 
     /**
@@ -74,15 +78,48 @@ class ExperimentController extends Controller
             return redirect('/');
         }
         $element =  $experiment->element()->first();
+
+
+        $allow[] = $experiment->element_id;
+        $e = $experiment->element;
+        while (Element::find($e->element_id) != null) {
+            $allow[] = $e->element_id;
+            if($e->type == 5) {
+                $fieldnr = session("field");
+                $field_id = substr($fieldnr, 0,-2);
+                $field_type = substr($fieldnr, -2);
+
+                $field = Field::where('id',$field_id)->where('type',$field_type)->first();
+                if($field == null) {
+                    return redirect('/');
+                }
+            }
+
+            $e = Element::find($e->element_id);
+
+
+        }
+
+        session(['fields'=> $allow]);
+
         return view('experiment.show', compact('experiment','element'));
     }
 
+    /**
+     * @param $id
+     * @param $element
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function element($id, $element) {
         $experiment = Experiment::where("key", $id)->first();
         if($experiment == null) {
             return redirect('/');
         }
         $element =  Element::find($element);
+        if(!in_array($element->id, session('fields'))) {
+            return redirect('/');
+        }
+
 
         if($element->type == 5) {
             $fieldnr = session("field");

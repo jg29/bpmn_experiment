@@ -161,12 +161,12 @@ $(function() {
             });
         }
     };
-    $( ".canvas" ).sortable(sort);
-    $( ".canvas li" ).click(function() {
+    $(".canvas").sortable(sort);
+    $(".canvas li").click(function() {
         var id = $(this).attr('id')
         sidebar(id)
     });
-    $( ".insert" ).draggable(drag);
-    $( "ul, li" ).disableSelection();
+    $(".insert").draggable(drag);
+    $("ul, li").disableSelection();
 
 });

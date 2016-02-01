@@ -2,8 +2,9 @@
 
 @section('content')
 
-    <div class="container">
-        @if($element->type == 1)
+
+    @if($element->type == 1)
+        <div class="container">
             <h2>{{ $element->title }}</h2>
             <p>{{ $element->content }}</p>
 
@@ -12,7 +13,9 @@
             @else
                 <a class="btn btn-default" href="/danke">weiter</a>
             @endif
-        @elseif($element->type == 2)
+        </div>
+    @elseif($element->type == 2)
+        <div class="container">
             <h2>{{ $element->title }}</h2>
             <p>{{ $element->content }}</p>
 
@@ -50,10 +53,20 @@
                     </div>
                 </div>
             {!! Form::close() !!}
-        @elseif($element->type == 3)
-            <h2>{{ $element->title }}</h2>
-            <p>{{ $element->content }}</p>
+        </div>
+    @elseif($element->type == 3)
 
+            <div id="row">
+                <div class="col-sm-offset-9 col-sm-3"><h2>{{ $element->title }}</h2>
+                    <p>{{ $element->content }}</p>
+                    @if($element->next() != null)
+                        <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
+                    @else
+                        <a class="btn btn-default" href="/danke">weiter</a>
+                    @endif
+                </div>
+
+            </div>
 
                 <link rel="stylesheet" href="/modeler/dist/css/diagram-js.css" />
                 <link rel="stylesheet" href="/modeler/dist/vendor/bpmn-font/css/bpmn-embedded.css" />
@@ -66,12 +79,9 @@
             </div>
 
             <script src="/modeler/dist/index.js"></script>
-       @if($element->next() != null)
-                <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
-            @else
-                <a class="btn btn-default" href="/danke">weiter</a>
-            @endif
-        @elseif($element->type == 4)
+
+    @elseif($element->type == 4)
+        <div class="container">
             <h2>{{ $element->title }}</h2>
             <p>{{ $element->content }}</p>
 
@@ -81,7 +91,9 @@
             @else
                 <a class="btn btn-default" href="/danke">weiter</a>
             @endif
-        @elseif($element->type == 5)
+        </div>
+    @elseif($element->type == 5)
+        <div class="container">
             <h2>Aufgabe</h2>
 
             <p>{{ $field->settings }}</p>
@@ -92,8 +104,6 @@
             @else
                 <a class="btn btn-default" href="/danke">weiter</a>
             @endif
-        @endif
-
-    </div>
-
+        </div>
+    @endif
 @stop

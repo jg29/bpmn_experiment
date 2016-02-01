@@ -38,8 +38,9 @@
     <thead>
         <tr>
             <th width="30%">Title</th>
-            <th width="30%">Type</th>
+            <th width="25%">Type</th>
             <th width="30%">Wert</th>
+            <th width="5%"><abbr title="Pflichtfeld">P</abbr></th>
             <th width="10%">&nbsp;</th>
         </tr>
     </thead>
@@ -51,7 +52,7 @@
             <tr>
 
                 <td width="30%">{!! Form::text('name', null,array('class'=>'form-control input-sm')) !!}</td>
-                <td width="30%">{!! Form::select('type', array('1'=>'Textfeld','2'=>'Textarea', '3'=>'Select', '4'=>'Radio', '5'=>'Checkbox'),null,array('class'=>'form-control input-sm')) !!}</td>
+                <td width="25%">{!! Form::select('type', array('1'=>'Textfeld','2'=>'Textarea', '3'=>'Select', '4'=>'Radio', '5'=>'Checkbox'),null,array('class'=>'form-control input-sm')) !!}</td>
                 <td width="30%">
                         @if($field->type == 1)
 
@@ -64,6 +65,9 @@
                         @elseif($field->type == 5)
                             {!! Form::textarea('settings', null,array('class'=>'form-control input-sm','style'=>'height:100px')) !!}
                         @endif
+                </td>
+                <td width="5%">
+                    {!! Form::checkbox('validation') !!}
                 </td>
                 <td width="10%">
                     <a href="#" id="{{ $field->id }}" class="up"><span class="glyphicon glyphicon-chevron-up"></span></a>
@@ -91,8 +95,11 @@
         <tr>
             {!! Form::hidden('element_id', $element->id) !!}
             <td width="30%" style="border: 0;">{!! Form::text('name', null,array('class'=>'form-control input-sm')) !!}</td>
-            <td width="30%" style="border: 0;">{!! Form::select('type', array('1'=>'Textfeld','2'=>'Textarea', '3'=>'Select', '4'=>'Radio', '5'=>'Checkbox'),null,array('class'=>'form-control input-sm')) !!}</td>
+            <td width="25%" style="border: 0;">{!! Form::select('type', array('1'=>'Textfeld','2'=>'Textarea', '3'=>'Select', '4'=>'Radio', '5'=>'Checkbox'),null,array('class'=>'form-control input-sm')) !!}</td>
             <td width="30%" style="border: 0;">{!! Form::textarea('settings', null,array('class'=>'form-control input-sm','style'=>'height:100px')) !!}</td>
+            <td width="5%">
+                {!! Form::checkbox('validation') !!}
+            </td>
             <td width="10%" style="border: 0;"> <a href="#" onclick="$(this).parents('form').submit();return false"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a></td>
 
         </tr>

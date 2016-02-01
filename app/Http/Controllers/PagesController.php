@@ -30,6 +30,11 @@ class PagesController extends Controller
             if(session("user") == "") {
                 session(["user"=>time()]);
             }
+
+
+
+
+
             return redirect('experiment/'.$array[0]);
         } else {
             return redirect('/');
