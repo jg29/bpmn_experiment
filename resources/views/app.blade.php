@@ -4,10 +4,10 @@
 
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <link  href="/css/bootstrap.min.css" rel="stylesheet" media="all" />
+    <script src="/js/jquery.min.js"     type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js"  type="text/javascript"></script>
+    <script src="/js/jquery-ui.min.js"  type="text/javascript"></script>
     @yield('head')
 </head>
 <body>
