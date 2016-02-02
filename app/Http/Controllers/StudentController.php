@@ -10,8 +10,11 @@ use App\Answer;
 use App\Field;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
+/**
+ * Class StudentController
+ * @package App\Http\Controllers
+ */
 class StudentController extends Controller
 {
     /**
@@ -69,7 +72,9 @@ class StudentController extends Controller
     }
 
 
-
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function redirect() {
         $array = explode("-", $_POST['key']);
 
@@ -84,5 +89,23 @@ class StudentController extends Controller
             return redirect('/');
         }
 
+    }
+
+
+    public function saveDraw($e_id, $f_id) {
+
+        $experiment = Experiment::where("key", $e_id)->first();
+
+        $answer = new Answer();
+        $answer->student = session('user');
+        $answer->element = $f_id;
+        $answer->experiment = $experiment->id;
+        $answer->value = $_POST['draw'];
+
+        //$array = json_decode($answer->value, true);
+
+        $answer->save();
+        //return ;
+        return "ok";
     }
 }

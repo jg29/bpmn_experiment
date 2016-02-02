@@ -45,7 +45,21 @@ function openDiagram(xml) {
                 saveDiagram(function (err, xml) {
                     if (bpmnxml != xml) {
                         bpmnxml = xml;
-                        console.log('geaendert');
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/experiment/"+$('.content').attr('experiment')+"/"+$('.content').attr('element')+"/draw",
+                            data: { draw: bpmnxml, "_token": $('.token input[name=_token]').val()},
+                            success: function(msg){
+                                console.log(msg);
+                            }
+                        });
+
+
+
+
+
+
                     }
 
                 });

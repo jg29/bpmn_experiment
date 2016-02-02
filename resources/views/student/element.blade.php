@@ -166,24 +166,35 @@ select.form-control {
                 <link rel="stylesheet" href="/modeler/app/css/app.css" />
 
 
-            <div class="content" id="#js-drop-zone">
+            <div class="content" experiment="{{$experiment->key}}" element="{{$element->id}}"  id="#js-drop-zone">
 
                 <div class="canvas" id="js-canvas"></div>
             </div>
 
             <script src="/modeler/dist/index.js"></script>
-
+            {!! Form::open(array('url' => "/experiment/".$experiment->key."/".$element->id.'/draw', 'method' => 'post','class'=>'form-horizontal token')) !!}
+            {!! Form::close() !!}
     @elseif($element->type == 4)
         <div class="container">
             <h2>{{ $element->title }}</h2>
             <p>{{ $element->content }}</p>
 
-            TODO Feedback
+
+            {!! Form::open(array('url' => "/experiment/".$experiment->key."/".$element->id.'/save', 'method' => 'post','class'=>'form-horizontal validate')) !!}
             @if($element->next() != null)
-                <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
+                {!! Form::hidden("url", "/experiment/".$experiment->key."/".$element->next()->id) !!}
             @else
-                <a class="btn btn-default" href="/danke">weiter</a>
+                {!! Form::hidden("url", "/danke") !!}
             @endif
+            {!! Form::textarea("form[feedback]", null, array('class'=>'form-control')) !!}
+            <div>&nbsp;</div>
+            <div class="form-group">
+                <div class=" col-sm-9">
+                    {!! Form::submit("weiter", array('class'=>'btn btn-default')) !!}
+                </div>
+            </div>
+            {!! Form::close() !!}
+
         </div>
     @elseif($element->type == 5)
         <div class="container">
