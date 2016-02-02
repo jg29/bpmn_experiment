@@ -23,7 +23,8 @@ function save() {
     } else {
         $('.menu .xor').css('display','none')
     }
-
+    $('.alert').html("gespeichert");
+    $('.alert').fadeIn(500).delay(1000).fadeOut(500)
 }
 function sidebar(id) {
 
@@ -69,6 +70,8 @@ function sidebar(id) {
                     url: $(this).attr('action'),
                     data: $data,
                     success: function(msg){
+                        $('.alert').html("gespeichert");
+                        $('.alert').fadeIn(500).delay(1000).fadeOut(500)
                         $('#'+id+' div').text($('.element'+id+' input[name=title]').val());
                         sidebar(id);
                         if($('#'+id).hasClass('xor')) {
@@ -80,6 +83,7 @@ function sidebar(id) {
             })
             $('.element'+id+' .delete').click(function() {
                 $('#'+id).remove();
+                $('.sidepanel').html("kein Element ausgewählt ");
                 save();
             })
         }
@@ -124,8 +128,10 @@ $(function() {
                 var name = 'XOR';
                 $copy.find('div').html('<hr><span><p style="background-color:#d9534f;color: white">bitte Bearbeiten</p></span><hr>')
             } else{
-                var name = prompt("Bitte Name eingeben:");
-                $copy.find('div').text(name);
+                //var name = prompt("Bitte Name eingeben:");
+                var name = "&nbsp;";
+                $copy.find('div').html(name);
+
             }
 
             $('.new input[name=title]').val(name);
@@ -139,26 +145,16 @@ $(function() {
                 success: function(msg){
                     $copy.attr('id', msg);
                     $copy.css('height','');
-                    save();
+
+                    sidebar(msg)
+
                 }
             });
             $copy.click(function() {
                 var id = $(this).attr('id')
                 sidebar(id)
             });
-            $('.add').click(function() {
-                $(".popup").fadeIn(100);
-                var self = $(this);
-                $(".einfuegen").click(function() {
-                    $(".einfuegen").unbind('click')
-                    self.parent().append("<span>"+$(".title").val()+"</span>");
-                    $(".popup .title").val("");
-                    $(".popup .text").val("");
-                    $(".popup").fadeOut(100);
-                    self.css("display","none")
-                });
-                return false;
-            });
+
         }
     };
     $(".canvas").sortable(sort);

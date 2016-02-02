@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Field;
 use App\Experiment;
 use App\Element;
+use App\Answer;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -105,47 +106,7 @@ class ExperimentController extends Controller
         return view('experiment.show', compact('experiment','element'));
     }
 
-    /**
-     * @param $id
-     * @param $element
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
-     */
-    public function element($id, $element) {
-        $experiment = Experiment::where("key", $id)->first();
-        if($experiment == null) {
-            return redirect('/');
-        }
-        $element =  Element::find($element);
-        if(!in_array($element->id, session('fields'))) {
-            return redirect('/');
-        }
 
-
-        if($element->type == 5) {
-            $fieldnr = session("field");
-            $field_id = substr($fieldnr, 0,-2);
-            $field_type = substr($fieldnr, -2);
-
-            $field = Field::where('id',$field_id)->where('type',$field_type)->first();
-
-        }
-
-
-
-        return view('experiment.element', compact('experiment','element', 'field'));
-    }
-
-    /**
-     * @param $e_id
-     * @param $f_id
-     * @param $request
-     * @return mixed
-     */
-    public function save( $e_id, $f_id,Request $request ) {
-
-
-        return redirect($request->url);
-    }
 
     /**
      * Show the form for editing the specified resource.

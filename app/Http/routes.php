@@ -14,11 +14,14 @@
 Route::get('/', "PagesController@home");
 Route::get('/danke', "PagesController@danke");
 Route::get('/test', "PagesController@test");
-Route::post('/', "PagesController@redirect");
+
 
 Route::resource('experiment','ExperimentController');
-Route::get('experiment/{key}/{id}','ExperimentController@element');
-Route::post('experiment/{key}/{id}/save','ExperimentController@save');
+
+Route::post('/', "StudentController@redirect");
+Route::get('experiment/{key}/{id}','StudentController@element');
+Route::post('experiment/{key}/{id}/save','StudentController@save');
+
 Route::post('element/order','ElementController@order');
 Route::resource('element','ElementController');
 Route::get('field/up','FieldController@up');

@@ -69,7 +69,7 @@ function saveDiagram(done) {
 
 $(document).on('ready', function() {
   $.ajax({
-    url: "/modeler/resources/newDiagram.bpmn",
+    url: "/modeler/resources/old.bpmn",
     cache: false
   }).done(function( data ) {
       openDiagram(data);

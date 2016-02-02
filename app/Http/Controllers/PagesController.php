@@ -22,23 +22,4 @@ class PagesController extends Controller
         return view('pages.test');
     }
 
-    public function redirect() {
-        $array = explode("-", $_POST['key']);
-
-        if(count($array) == 2 and $array[0] != '' and $array[1] != '') {
-            session(['experiment'=>$array[0],'field'=>$array[1]]);
-            if(session("user") == "") {
-                session(["user"=>time()]);
-            }
-
-
-
-
-
-            return redirect('experiment/'.$array[0]);
-        } else {
-            return redirect('/');
-        }
-
-    }
 }

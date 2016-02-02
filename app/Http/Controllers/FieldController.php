@@ -46,10 +46,14 @@ class FieldController extends Controller
         $field->element_id = $request->element_id;
         $field->type = $request->type;
         $field->name = $request->name;
+        $field->validation = $request->validation;
         $field->settings = $request->settings;
         $f = Field::orderBy('sort', 'DESC')->first();
-
-        $field->sort = $f->sort+1;
+        if($f != null) {
+            $field->sort = $f->sort+1;
+        } else{
+            $field->sort = 1;
+        }
         $field->save();
 
 

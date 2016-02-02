@@ -2,6 +2,96 @@
 
 @section('content')
 
+<style>
+
+
+.glyphicon-remove {
+    display: none;
+}
+.glyphicon-ok {
+    display: none;
+}
+.has-error .glyphicon-remove {
+    display: block;
+}
+.has-success .glyphicon-ok {
+    display: block;
+}
+select.form-control {
+    width: calc(100% - 35px)
+}
+
+</style>
+
+
+<script>
+    var check = false;
+    $(function() {
+        $('.validate').submit(function() {
+            check = true;
+
+            $(this).find('.required[type=text]').each(function() {
+                validateClass($(this),$(this).val() != "");
+            });
+            $(this).find('select.required').each(function() {
+                validateClass($(this),$(this).val() != "");
+            });
+            $(this).find('.required[type=radio]').each(function() {
+                validateClass($(this),$(this).parent().find('.required[type=radio]:checked').length == 1);
+            });
+            $(this).find('textarea.required').each(function() {
+                validateClass($(this),$(this).val() != "");
+            });
+
+            return check;
+        });
+
+
+        var eventRequire = function() {
+
+            if($(this).attr('type') == 'text' || $(this).is('select')) {
+                validateClass($(this),$(this).val() != "");
+            }
+            if($(this).is('textarea')) {
+                validateClass($(this),$(this).val() != "");
+            }
+            if($(this).attr('type') == 'radio') {
+                validateClass($(this),$(this).parent().find('.required[type=radio]:checked').length == 1);
+            }
+
+
+        };
+        $('.required').change(eventRequire);
+        $('.required').keyup(eventRequire);
+
+
+
+        $('.validate .required[type=text]').change(function() {
+
+        });
+        $('.validate .required[type=checkbox]').change(function() {
+            validateClass($(this),$(this).val() != "");
+        });
+
+
+    });
+
+    function validate(element) {
+
+    }
+
+    function validateClass(element, bool) {
+        if(bool) {
+            element.parent().addClass('has-success')
+            element.parent().removeClass('has-error')
+        } else {
+            check = false;
+            element.parent().addClass('has-error')
+            element.parent().removeClass('has-success')
+        }
+    }
+
+</script>
 
     @if($element->type == 1)
         <div class="container">
@@ -19,31 +109,34 @@
             <h2>{{ $element->title }}</h2>
             <p>{{ $element->content }}</p>
 
-            {!! Form::open(array('url' => "/experiment/".$experiment->key."/".$element->id.'/save', 'method' => 'post','class'=>'form-horizontal')) !!}
+            {!! Form::open(array('url' => "/experiment/".$experiment->key."/".$element->id.'/save', 'method' => 'post','class'=>'form-horizontal validate')) !!}
                 @if($element->next() != null)
                 {!! Form::hidden("url", "/experiment/".$experiment->key."/".$element->next()->id) !!}
                 @else
                     {!! Form::hidden("url", "/danke") !!}
                 @endif
             @foreach($element->fields as $field)
-                    <div class="form-group">
-                        {!! Form::label($field->id, $field->name, array('class'=>'col-sm-3 control-label')) !!}
+                    <div class="form-group has-feedback">
+                        {!! Form::label($field->id, $field->name." ".(($field->validation!='')?'*':''), array('class'=>'col-sm-3 control-label')) !!}
                         <div class="col-sm-9">
                             @if($field->type == 1)
-                                {!! Form::text($field->id, null, array('class'=>'form-control')) !!}
+                                {!! Form::text("form[".$field->id."]", null, array('class'=>'form-control '.$field->validation)) !!}
                             @elseif($field->type == 2)
-                                {!! Form::textarea($field->id, null, array('class'=>'form-control')) !!}
+                                {!! Form::textarea("form[".$field->id."]", null, array('class'=>'form-control '.$field->validation)) !!}
                             @elseif($field->type == 3)
-                                {!! Form::select($field->id, explode("\n",$field->settings), null, array('class'=>'form-control')) !!}
+                                {!! Form::select("form[".$field->id."]", array_merge(['' => 'Bitte auswählen'], explode("\n",$field->settings)), null, array('class'=>'form-control '.$field->validation)) !!}
                             @elseif($field->type == 4)
                                 @foreach(explode("\n",$field->settings) as $key=>$wert)
-                                {!! Form::radio($field->id, $key) !!} {{$wert}}<br>
+                                {!! Form::radio("form[".$field->id."]", $key,  null, array('class'=>$field->validation)) !!} {{$wert}}<br>
                                 @endforeach
                             @elseif($field->type == 5)
                                 @foreach(explode("\n",$field->settings) as $key=>$wert)
-                                    {!! Form::checkbox($field->id."[]", $key) !!} {{$wert}}<br>
+                                    {!! Form::checkbox("form[".$field->id."][]", $key, null) !!} {{$wert}}<br>
                                 @endforeach
                             @endif
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+
                         </div>
                     </div>
                 @endforeach

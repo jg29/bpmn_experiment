@@ -18,7 +18,7 @@ class CreateFieldsTable extends Migration
             $table->integer('sort');
             $table->integer('type');
             $table->string('name');
-            $table->string('validation');
+            $table->string('validation')->nullable();
             $table->text('settings');
             $table->timestamps();
         });

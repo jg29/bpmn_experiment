@@ -14,7 +14,8 @@ class Field extends Model
         'name',
         'type',
         'element_id',
-        'settings'
+        'settings',
+        'validation'
     ];
 
 
