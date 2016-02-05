@@ -31,8 +31,24 @@ class ExperimentController extends Controller
             return redirect('/auth/login');
         }
         $experiments = Auth::user()->experiments()->get();
+        foreach($experiments as $experiment) {
+            $element =  Element::find($experiment->element_id);
+            while($element != null) {
+                if ($element->type == 5) {
+                    for($i=0;$i<$element->content;$i++) {
+                        $hash[$experiment->id][] = $i . substr(md5(date("s", strtotime($element->created_at)) . $i), -2);
+                    }
+                }
+                $element = $element->next();
+            }
+        }
 
-        return view('experiment.index', compact('experiments'));
+
+
+        return view('experiment.index', compact('experiments', 'hash'));
+
+
+
     }
 
     /**
@@ -60,7 +76,7 @@ class ExperimentController extends Controller
             return redirect('/auth/login');
         }
         $experiment = new Experiment($request->all());
-        $experiment->key = $rest = substr(bcrypt(($request->title).random_bytes(5)), -6);
+        $experiment->key = substr(bcrypt(($request->title).random_bytes(5)), -6);
         Auth::user()->experiments()->save($experiment);
 
         return redirect('experiment/'.$experiment->id."/edit");
@@ -122,9 +138,9 @@ class ExperimentController extends Controller
         $experiment = Experiment::findOrFail($id);
 
         $element =  $experiment->element()->first();
-
+        $i = 0;
         //return dd($element->next());
-        return view('experiment.edit', compact('experiment','element'));
+        return view('experiment.edit', compact('experiment','element','i'));
     }
 
     /**
@@ -140,6 +156,8 @@ class ExperimentController extends Controller
             return redirect('/auth/login');
         }
         $experiment = Experiment::findOrFail($id);
+
+
 
         $experiment->update($request->all());
         return redirect('experiment');

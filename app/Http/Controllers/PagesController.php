@@ -21,7 +21,7 @@ class PagesController extends Controller
 
     public function test() {
 
-        $diagramme = Answer::where("element", 4)->where("experiment", 1)->where('student', 1454425623)->get();
+        $diagramme = Answer::where("element", 9)->where("experiment", 2)->where('student', 1454509618)->get();
 
 
         return view('pages.test', compact('diagramme'));

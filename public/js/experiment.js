@@ -7,17 +7,52 @@ function save() {
             wert+=$(this).attr("id")+',';
         }
     });
-    $('.order input[name=order]').val(wert);
-    var data = $(".order").serialize();
-    $.ajax({
-        type: "POST",
-        url: $('.order').attr('action'),
-        data: data,
-        success: function() {
+    var xorElement = new Array();
 
-        }
+    $('.canvas > li ul').each(function () {
+        var uid = $(this).attr('uid')
+        var i = 0;
+        xorElement[uid] = new Array();
+        $(this).find('li').each(function () {
+            if($(this).attr("id") != undefined && $(this).attr("id")!= 'start' && $(this).attr("id") != 'ende'){
+                xorElement[uid][i++] = $(this).attr("id");
+            }
+        });
     });
-    if($('.canvas .xor').length == 0) {
+    console.log(xorElement)
+
+    if(wert !=$('.order input[name=order]').val()) {
+        $('.order input[name=order]').val(wert);
+        var data = $(".order").serialize();
+        $.ajax({
+            type: "POST",
+            url: $('.order').attr('action'),
+            data: data,
+            success: function() {
+
+            }
+        });
+    }
+    var temp = new Array();
+    if(temp != xorElement) {
+        temp = xorElement;
+        $('.order input[name=orderxor]').val(wert);
+        $.ajax({
+            type: "POST",
+            url: $('.orderxor').attr('action'),
+            data: {
+                'element': $('.canvas .xor').attr('id'),
+                '_token': $('.orderxor input[name=_token]').val(),
+                'array': xorElement
+            },
+            success: function(msg) {
+                console.log(msg)
+            }
+        });
+
+    }
+
+        if($('.canvas .xor').length == 0) {
         $('.menu .xor').css('display','')
 
     } else {
@@ -32,7 +67,22 @@ function sidebar(id) {
         type: "GET",
         url: '/element/'+id+'/edit',
         success: function(msg) {
+
+
             $('.sidepanel').html(msg);
+            $('.numbermin').change(function() {
+                var length = 0;
+                $('.xor ul').each(function() {
+                    if($(this).html().trim()) {
+                        length++;
+                    }
+                });
+                if($('.numbermin').val() < length) {
+                    console.log('fehler');
+                    $('.numbermin').val(length)
+                    $(this).parent().find('.formfehler').text('Alle xOR-Pfade enthalten Elemente')
+                }
+            });
             $('.exkey').text($('.canvas').attr('key')+'-')
 
             $('.sidepanel .up').click(function() {
@@ -109,16 +159,19 @@ $(function() {
         },
     };
     var drag = {
-        connectToSortable: ".canvas, .can",
+        connectToSortable: ".canvas, .can, .canvas ul",
         helper: function () {
             $copy = $(this).clone();
             return $copy;
         },
         revert: "invalid",
         start: function() {
-
             $copy.css("width","auto")
 
+        },
+        drag: function() {
+            $('.ui-sortable-placeholder').css({'visibility':'visible',opacity: 0.1});
+            $('.ui-sortable-placeholder').html('<div></div>')
         },
         stop: function(){
             $copy.css("width","auto")
@@ -126,10 +179,10 @@ $(function() {
             var id = $(this).attr('typ')
             if (id == 5) {
                 var name = 'XOR';
-                $copy.find('div').html('<hr><span><p style="background-color:#d9534f;color: white">bitte Bearbeiten</p></span><hr>')
+                $copy.find('div').html('<hr><ul><li style="background-color:#d9534f;color: white">bitte Bearbeiten</li></ul><hr>')
             } else{
                 //var name = prompt("Bitte Name eingeben:");
-                var name = "&nbsp;";
+                var name = "";
                 $copy.find('div').html(name);
 
             }
@@ -157,9 +210,13 @@ $(function() {
 
         }
     };
-    $(".canvas").sortable(sort);
-    $(".canvas li").click(function() {
+    $(".canvas, .canvas ul").sortable(sort);
+    $(".canvas li, .canvas .xor li").not('.xor').click(function() {
         var id = $(this).attr('id')
+        sidebar(id)
+    });
+    $(".canvas .xor .xorraute").click(function() {
+        var id = $(this).parent().parent().attr('id')
         sidebar(id)
     });
     $(".insert").draggable(drag);

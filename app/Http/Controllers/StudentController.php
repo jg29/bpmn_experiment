@@ -46,29 +46,18 @@ class StudentController extends Controller
      * @param $element
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function element($id, $element) {
+    public function element($id, $num) {
         $experiment = Experiment::where("key", $id)->first();
         if($experiment == null) {
             return redirect('/');
         }
-        $element =  Element::find($element);
-        if(!in_array($element->id, session('fields'))) {
+        $elements = session('elements');
+        $element =  Element::find($elements[$num]);
+        if($element == null) {
             return redirect('/');
         }
-
-
-        if($element->type == 5) {
-            $fieldnr = session("field");
-            $field_id = substr($fieldnr, 0,-2);
-            $field_type = substr($fieldnr, -2);
-
-            $field = Field::where('id',$field_id)->where('type',$field_type)->first();
-
-        }
-
-
-
-        return view('student.element', compact('experiment','element', 'field'));
+        $next = $num+1;
+        return view('student.element', compact('experiment','element','next','elements'));
     }
 
 
@@ -79,12 +68,37 @@ class StudentController extends Controller
         $array = explode("-", $_POST['key']);
 
         if(count($array) == 2 and $array[0] != '' and $array[1] != '') {
-            session(['experiment'=>$array[0],'field'=>$array[1]]);
+
             if(session("user") == "") {
                 session(["user"=>time()]);
             }
 
-            return redirect('experiment/'.$array[0]);
+
+
+
+            $experiment = Experiment::where("key", $array[0])->first();
+            if($experiment == null) {
+                return redirect('/');
+            }
+            $elements = array();
+            $element =  Element::find($experiment->element_id);
+            while($element != null) {
+                if($element->type == 5) {
+                    $hash = $array[1]{0}.substr(md5(date("s", strtotime($element->created_at)).$array[1]{0}), -2);
+                    if(trim($hash) != trim($array[1])) {
+                        return redirect('/');
+                    }
+
+                    $xor = json_decode($element->ref, true);
+                    $elements = array_merge($elements, $xor[$array[1]{0}]);
+                } else {
+                    $elements[] = $element->id;
+                }
+                $element = $element->next();
+            }
+            session(['experiment'=>$array[0],'elements'=>$elements]);
+
+            return redirect('/experiment/'.$array[0].'/0');
         } else {
             return redirect('/');
         }

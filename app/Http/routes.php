@@ -19,6 +19,7 @@ Route::get('/danke', "PagesController@danke");
 Route::get('/test', "PagesController@test");
 
 
+
 Route::resource('experiment','ExperimentController');
 
 Route::post('/', "StudentController@redirect");
@@ -26,8 +27,11 @@ Route::get('experiment/{key}/{id}','StudentController@element');
 Route::post('experiment/{key}/{id}/save','StudentController@save');
 Route::post('experiment/{key}/{id}/draw','StudentController@saveDraw');
 
+Route::post('element/orderxor','ElementController@orderXor');
 Route::post('element/order','ElementController@order');
+
 Route::resource('element','ElementController');
+
 Route::get('field/up','FieldController@up');
 Route::get('field/down','FieldController@down');
 Route::resource('field','FieldController');

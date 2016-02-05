@@ -98,8 +98,8 @@ select.form-control {
             <h2>{{ $element->title }}</h2>
             <p>{{ $element->content }}</p>
 
-            @if($element->next() != null)
-                <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
+            @if($next<count($elements))
+                <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$next}}">weiter</a>
             @else
                 <a class="btn btn-default" href="/danke">weiter</a>
             @endif
@@ -110,8 +110,8 @@ select.form-control {
             <p>{{ $element->content }}</p>
 
             {!! Form::open(array('url' => "/experiment/".$experiment->key."/".$element->id.'/save', 'method' => 'post','class'=>'form-horizontal validate')) !!}
-                @if($element->next() != null)
-                {!! Form::hidden("url", "/experiment/".$experiment->key."/".$element->next()->id) !!}
+                @if($next<count($elements))
+                {!! Form::hidden("url", "/experiment/".$experiment->key."/".$next) !!}
                 @else
                     {!! Form::hidden("url", "/danke") !!}
                 @endif
@@ -152,8 +152,8 @@ select.form-control {
             <div id="row">
                 <div class="col-sm-offset-9 col-sm-3"><h2>{{ $element->title }}</h2>
                     <p>{{ $element->content }}</p>
-                    @if($element->next() != null)
-                        <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
+                    @if($next<count($elements))
+                        <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$next}}">weiter</a>
                     @else
                         <a class="btn btn-default" href="/danke">weiter</a>
                     @endif
@@ -181,8 +181,8 @@ select.form-control {
 
 
             {!! Form::open(array('url' => "/experiment/".$experiment->key."/".$element->id.'/save', 'method' => 'post','class'=>'form-horizontal validate')) !!}
-            @if($element->next() != null)
-                {!! Form::hidden("url", "/experiment/".$experiment->key."/".$element->next()->id) !!}
+            @if($next<count($elements))
+                {!! Form::hidden("url", "/experiment/".$experiment->key."/".$next) !!}
             @else
                 {!! Form::hidden("url", "/danke") !!}
             @endif
@@ -195,19 +195,6 @@ select.form-control {
             </div>
             {!! Form::close() !!}
 
-        </div>
-    @elseif($element->type == 5)
-        <div class="container">
-            <h2>Aufgabe</h2>
-
-            <p>{{ $field->settings }}</p>
-
-
-            @if($element->next() != null)
-                <a class="btn btn-default" href="/experiment/{{$experiment->key}}/{{$element->next()->id}}">weiter</a>
-            @else
-                <a class="btn btn-default" href="/danke">weiter</a>
-            @endif
         </div>
     @endif
 @stop

@@ -46,6 +46,7 @@
                 @include('errors.list')
             </div>
                 <ul class="canvas" key="{{ $experiment->key }}">
+
                     <li class="start" id="start"><div>&nbsp;</div></li>
                     @if($element)
                         <li id="{{$element->id }}" class="{{ $element->getClass() }}" ><div>{!! $element->title !!}</div></li>
@@ -53,18 +54,26 @@
                         @while($element = $element->next())
                             @if($element->type == 5)
                                 <li id="{{$element->id }}" class="{{ $element->getClass() }}">
-                                    @if(count($element->fields) == 0)
+                                    @if($element->content == 0)
                                         <div class="num1">
                                             <hr>
-                                            <span><p style="background-color:#d9534f;color: white">bitte Bearbeiten</p></span>
+                                            <ul><li style="background-color:#d9534f;color: white">bitte Bearbeiten</li></ul>
                                             <hr>
                                         </div>
                                     @else
-                                        <div class="num{{count($element->fields)}}">
+                                        <div class="num{{$element->content}}">
+                                            <span class="xorraute">XOR</span>
                                             <hr>
-                                            @foreach($element->fields as $field)
-                                                <span><p>{{$field->name}}</p></span>
+                                            @foreach($element->getRef() as $ul)
+                                                <ul uid="{{ $i++ }}">
+                                                    @foreach($ul as $li)
+                                                        <li id="{{$li->id}}" class="{{ $li->getClass() }}"><div>{{$li->title  }}</div></li>
+                                                    @endforeach
+                                                </ul>
                                             @endforeach
+                                            @for($j = count($element->getRef()); $j < $element->content; $j++)
+                                                <ul uid="{{  $j }}"></ul>
+                                            @endfor
                                             <hr>
                                         </div>
                                     @endif
@@ -107,6 +116,10 @@
 
     {!! Form::open(array('url' => 'element/order', 'method' => 'post', 'class'=>'order')) !!}
     {!! Form::hidden('order') !!} {!! Form::hidden('experiment', $experiment->id) !!}
+    {!! Form::close() !!}
+
+    {!! Form::open(array('url' => 'element/orderxor', 'method' => 'post', 'class'=>'orderxor')) !!}
+    {!! Form::hidden('experiment', $experiment->id) !!}
     {!! Form::close() !!}
 
 

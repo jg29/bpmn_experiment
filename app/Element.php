@@ -41,7 +41,29 @@ class Element extends Model
      */
     public function fields()
     {
+
+
         return $this->hasMany('App\Field')->orderBy('sort', 'ASC');
+
+
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getRef()
+    {
+        $array = json_decode($this->ref, true);
+        foreach($array as $i => $a) {
+            foreach($a as $j => $element) {
+                $array[$i][$j] = Element::findOrFail($element);
+            }
+        }
+        if($this->content < count($array)) {
+
+        }
+        return $array;
+
     }
 
     public function getClass() {

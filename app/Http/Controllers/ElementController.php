@@ -77,7 +77,6 @@ class ElementController extends Controller
             return view('element.edit', compact('element','fields'));
         }
 
-
         return view('element.edit', compact('element'));
     }
 
@@ -127,6 +126,18 @@ class ElementController extends Controller
         }
 
         return "ok";
+    }
+
+    public function orderXor(Request $request) {
+        if (!Auth::check()) {
+            return redirect('/auth/login');
+        }
+
+        $element = Element::findOrFail($request->element);
+        $element->ref = json_encode($request->array);
+        $element->save();
+
+        return 'ok';
     }
 
 
