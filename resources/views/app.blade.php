@@ -4,10 +4,15 @@
 
     <meta charset="UTF-8">
     <title></title>
-    <link  href="/css/bootstrap.min.css" rel="stylesheet" media="all" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="all" />
+    <link href="/css/datatables.min.css" rel="stylesheet" media="all" />
+    <link href="/css/jquery-ui.min.css" rel="stylesheet" media="all" />
+
     <script src="/js/jquery.min.js"     type="text/javascript"></script>
     <script src="/js/bootstrap.min.js"  type="text/javascript"></script>
     <script src="/js/jquery-ui.min.js"  type="text/javascript"></script>
+    <script src="/js/datatables.min.js" type="text/javascript"></script>
+
     @yield('head')
 </head>
 <body>

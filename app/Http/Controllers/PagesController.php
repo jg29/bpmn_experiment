@@ -16,16 +16,7 @@ class PagesController extends Controller
     }
 
     public function danke() {
+        session(["user"=>null]);
         return view('pages.danke');
     }
-
-    public function test() {
-
-        $diagramme = Answer::where("element", 9)->where("experiment", 2)->where('student', 1454509618)->get();
-
-
-        return view('pages.test', compact('diagramme'));
-
-    }
-
 }

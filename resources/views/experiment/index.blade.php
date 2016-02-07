@@ -24,6 +24,7 @@
                             @endforeach
                         </td>
                         <td width="10"><a href="experiment/{{ $experiment->id }}/edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+                        <td width="10"><a href="auswertung/{{ $experiment->id }}"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></a></td>
                         <td width="10">
                             {!! Form::open(array('route' => array('experiment.destroy', $experiment->id), 'method' => 'delete')) !!}
                                 <a href="#" onclick="if(confirm('Experiment löschen?')) {$(this).parent().submit()} else {return false;}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>

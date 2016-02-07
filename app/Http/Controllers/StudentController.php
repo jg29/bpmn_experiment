@@ -43,7 +43,7 @@ class StudentController extends Controller
 
     /**
      * @param $id
-     * @param $element
+     * @param $num
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function element($id, $num) {
@@ -97,6 +97,13 @@ class StudentController extends Controller
                 $element = $element->next();
             }
             session(['experiment'=>$array[0],'elements'=>$elements]);
+
+            $antwort = new Answer();
+            $antwort->element = 0;
+            $antwort->experiment = $experiment->id;
+            $antwort->value = $array[1]{0};
+            $antwort->student = session("user");
+            $antwort->save();
 
             return redirect('/experiment/'.$array[0].'/0');
         } else {

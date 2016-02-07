@@ -1,20 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+@extends('app')
 
-    <link  href="/css/bootstrap.min.css" rel="stylesheet" media="all" />
-    <script src="/js/jquery.min.js"     type="text/javascript"></script>
-    <script src="/js/jquery-ui.min.js"  type="text/javascript"></script>
+@section('head')
+
     <script src="/js/bpmn-js/dist/bpmn-viewer.js"></script>
 
-    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+
     <style type="text/css">
         .canvas {
             position: fixed;
-            top: 60px;
+            top: 80px;
             left: 0;
             right: 0;
             bottom: 0;
@@ -24,11 +18,11 @@
         #slider {
             margin-top: 20px;
             position: fixed;
-            top: 0;
+            top: 40px;
             left: 25%;
             width: 50%;
+            z-index: 100;
             display: none;
-
         }
 
 
@@ -65,7 +59,7 @@
                             } else {
                                 viewer.get('canvas').zoom('fit-viewport');
 
-                                $('.alert-success').text(num+" von "+(diagram.length-1)+" geladen");
+                                $('.alert-success').text((num+1)+" von "+(diagram.length)+" geladen");
                                 if(num<diagram.length-1){
                                     load(num+1)
                                 } else {
@@ -111,15 +105,15 @@
       CommonJS modules + browserify
     -->
 
-    <title>npm/browserify example - bpmn-js-examples</title>
-</head>
-<body>
+@stop
 
-        <div id="slider" class="col-md-5"></div>
+
+@section('content')
+
+
+
+<div id="slider" class="col-md-5"></div>
 <div id="can"></div>
-
 <div class="alert alert-success" role="alert"></div>
 
-</body>
-</html>
-
+@stop

@@ -17,7 +17,23 @@ Route::get('/', "PagesController@home");
 
 Route::get('/danke', "PagesController@danke");
 Route::get('/test', "PagesController@test");
+Route::get('/excel', function() {
 
+    Excel::create('Download', function($excel) {
+
+        $excel->sheet('Seite', function($sheet) {
+
+            $sheet->loadView('test.excel');
+
+        });
+
+    })->download('xls');
+
+});
+
+
+Route::get('auswertung/timeline/{element}/{student}','AuswertungController@timeline');
+Route::resource('auswertung','AuswertungController');
 
 
 Route::resource('experiment','ExperimentController');

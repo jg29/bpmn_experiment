@@ -73,7 +73,6 @@ class Element extends Model
             case 3: return "edit";
             case 4: return "feedback";
             case 5: return "xor";
-
         }
     }
 
