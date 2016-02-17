@@ -36,7 +36,9 @@ class Field extends Model
                 $ret .= explode("\n", $feld->settings)[$v]." ";
             }
         } else {
-            $ret = explode("\n", $feld->settings)[$value];
+            if(array_key_exists($value, explode("\n", $feld->settings))) {
+                $ret = explode("\n", $feld->settings)[$value];
+            }
         }
 
 

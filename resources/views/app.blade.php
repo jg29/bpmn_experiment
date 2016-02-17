@@ -37,9 +37,14 @@
                     <a href="{{ URL::to( '/') }}">Start</a>
                 </li>
 
-                @if(Auth::user())
+                @if(Auth::user() and Auth::user()->isEditor())
                     <li class="{{ Request::is( 'experiment*') ? 'active' : '' }}">
                         <a href="{{ URL::to( '/experiment') }}">Experiment</a>
+                    </li>
+                @endif
+                @if(Auth::user() and Auth::user()->isAdmin())
+                    <li class="{{ Request::is( 'user*') ? 'active' : '' }}">
+                        <a href="{{ URL::to( '/user') }}">Benutzerverwaltung</a>
                     </li>
                 @endif
 

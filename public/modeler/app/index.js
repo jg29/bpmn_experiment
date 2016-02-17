@@ -54,15 +54,12 @@ function openDiagram(xml) {
                                 console.log(msg);
                             }
                         });
-
-
-
-
-
-
                     }
-
                 });
+                /*saveSVG(function(err, svg) {
+                    alert(svg);
+                    setEncoded($('#js-download-svg'), 'diagram.svg', err ? null : svg);
+                });*/
 
             });
         });
@@ -79,8 +76,12 @@ function saveDiagram(done) {
   });
 }
 
+function saveSVG(done) {
+    renderer.saveSVG(done);
+}
 // bootstrap diagram functions
 
+var seitenwechsel = true;
 $(document).on('ready', function() {
   $.ajax({
     url: "/modeler/resources/old.bpmn",
@@ -88,6 +89,30 @@ $(document).on('ready', function() {
   }).done(function( data ) {
       openDiagram(data);
   });
+
+
+    window.onbeforeunload = function () {
+        if(seitenwechsel)   {
+            return 'Möchten Sie die Seite wirklich verlassen?';
+        }
+    };
+    $('.btn-default').click(function() {
+        seitenwechsel = false;
+
+
+
+        saveSVG(function(err, svg) {
+            $.ajax({
+                type: "POST",
+                url: "/experiment/"+$('.content').attr('experiment')+"/"+$('.content').attr('element')+"/svg",
+                data: { draw: svg, "_token": $('.token input[name=_token]').val()},
+                success: function(msg){
+                    console.log(msg);
+                }
+            });
+        });
+
+    });
 
 
 });

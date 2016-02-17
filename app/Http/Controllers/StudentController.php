@@ -129,4 +129,20 @@ class StudentController extends Controller
         //return ;
         return "ok";
     }
+    public function saveSvg($e_id, $f_id) {
+
+        $experiment = Experiment::where("key", $e_id)->first();
+
+        if(!file_exists ("svg/" . $experiment->id . "/")) {
+            mkdir("svg/" . $experiment->id . "/", 0777);
+        }
+        $f = fopen ("svg/".$experiment->id."/".$f_id."_".session("user").".svg" , "w");
+        fwrite($f,  $_POST['draw']);
+        //file_put_contents("svg/".$experiment->id."/".$f_id."_".session("user").".svg",  $_POST['draw']);
+        fclose($f);
+
+        exec("/opt/local/bin/convert svg/".$experiment->id."/".$f_id."_".session("user").".svg svg/".$experiment->id."/".$f_id."_".session("user").".png");
+
+        return "ok";
+    }
 }

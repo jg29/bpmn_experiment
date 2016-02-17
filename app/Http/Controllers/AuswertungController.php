@@ -8,48 +8,32 @@ use App\Experiment;
 use App\Element;
 use Illuminate\Http\Request;
 
+use Excel;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class AuswertungController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    public $experiment;
+
+    public function excel($id) {
+        $this->experiment = Experiment::findOrFail($id);
+
         //
+
+
+
+        Excel::create('Download', function($excel) {
+            $excel->sheet('Seite', function($sheet) {
+                $experiment = $this->experiment;
+                $sheet->loadView('export.auswertung', compact('experiment'));
+            });
+        })->download('xls');
+
+
+        //return view('export.auswertung', compact('experiment'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $experiment = Experiment::findOrFail($id);
@@ -65,14 +49,16 @@ class AuswertungController extends Controller
 
 
                 $xor2 = array();
-                foreach($xor as $pkey => $pfad) {
-                    foreach($pfad as $ekey => $el) {
-                        $ele =  Element::find($el);
-                        if($ele->type == 2 or $ele->type == 3 or $ele->type == 4) {
-                            $xor2[$pkey][$ekey] = $ele;
-                            $antwortenObjects = Answer::where("element", $ele->id)->where("experiment", $id)->get();
-                            foreach($antwortenObjects as $antwortObject) {
-                                $antworten[$antwortObject->student][$ele->id] = $antwortObject;
+                if(is_array($xor)) {
+                    foreach($xor as $pkey => $pfad) {
+                        foreach($pfad as $ekey => $el) {
+                            $ele =  Element::find($el);
+                            if($ele->type == 2 or $ele->type == 3 or $ele->type == 4) {
+                                $xor2[$pkey][$ekey] = $ele;
+                                $antwortenObjects = Answer::where("element", $ele->id)->where("experiment", $id)->get();
+                                foreach($antwortenObjects as $antwortObject) {
+                                    $antworten[$antwortObject->student][$ele->id] = $antwortObject;
+                                }
                             }
                         }
                     }
@@ -100,39 +86,7 @@ class AuswertungController extends Controller
         return view('auswertung.show', compact('experiment', 'elements', 'antworten', 'xorElement', 'fields'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function timeline($element, $student) {
 

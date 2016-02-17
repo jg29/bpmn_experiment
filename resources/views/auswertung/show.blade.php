@@ -1,27 +1,9 @@
 @extends('app')
 
 @section('head')
-    <script src="/js/bpmn-js/dist/bpmn-viewer.js"></script>
     <script>
         $(function() {
-            var BpmnViewer = window.BpmnJS;
-            // var viewer = new BpmnViewer({ container: $('#js-canvas'), height: 600 });
 
-
-            $('.canvas').each(function() {
-                var inhalt = $(this).attr('content');
-                var user = $(this).attr('user');
-
-                var viewer = new BpmnViewer({ container: $(this), height: 250  });
-                viewer.importXML(inhalt, function (err) {
-                    if (err) {
-                        console.log('something went wrong:', err);
-                    } else {
-                        viewer.get('canvas').zoom('fit-viewport');
-                    }
-                });
-
-            });
             var numrows = $(".datatable thead tr:first-of-type th").length-1;
 
             var table = $('.datatable').DataTable({
@@ -203,7 +185,7 @@
                                             <td>
                                                 <div style="width: 400px"></div>
                                                 <a href="/auswertung/timeline/{{  $element->id }}/{{$k}}">
-                                                    <div user="{{$k}}" class='canvas canvas{{$k}}' content='{!! str_replace("\n","",$student[$element->id]->value) !!}'> </div>
+                                                    <img src="/svg/{{ $experiment->id }}/{{  $e->id }}_{{$k}}.png" style="max-width:400px; max-height: 250px" />
                                                 </a>
                                             </td>
                                         @elseif($element->type == 4)
@@ -258,7 +240,8 @@
                                                                 <td>
                                                                     <div style="width: 400px"></div>
                                                                     <a href="/auswertung/timeline/{{  $e->id }}/{{$k}}">
-                                                                        <div user="{{$k}}" class='canvas canvas{{$k}}' content='{!! str_replace("\n","",$student[$e->id]->value) !!}'> </div>
+                                                                        <img src="/svg/{{ $experiment->id }}/{{  $e->id }}_{{$k}}.png" style="max-width:400px; max-height: 250px" /><br>
+                                                                        <a class="" href="/svg/{{ $experiment->id }}/{{  $e->id }}_{{$k}}.svg"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> SVG</a> <a class="" href="/svg/{{ $experiment->id }}/{{  $e->id }}_{{$k}}.png"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> PNG</a>
                                                                     </a>
                                                                 </td>
                                                             @elseif($e->type == 4)

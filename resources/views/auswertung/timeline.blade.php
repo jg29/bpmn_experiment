@@ -16,15 +16,14 @@
 
         }
         #slider {
-            margin-top: 20px;
-            position: fixed;
-            top: 40px;
-            left: 25%;
-            width: 50%;
-            z-index: 100;
             display: none;
         }
-
+        .row {
+            margin-top: -10px;
+        }
+        #slider {
+            margin-top: 5px;
+        }
 
         .alert{
             margin-left: -100px;
@@ -39,6 +38,12 @@
             -webkit-box-shadow: 0px 0px 50px 5px rgba(255,255,255,1);
             -moz-box-shadow: 0px 0px 50px 5px rgba(255,255,255,1);
             box-shadow: 0px 0px 50px 5px rgba(255,255,255,1);
+        }
+        .forward {
+            visibility: hidden;
+        }
+        .stop{
+            display: none;
         }
     </style>
     <script>
@@ -83,10 +88,7 @@
                         max: diagram.length-1,
                         step: 1,
                         slide: function( event, ui ) {
-
-                            $('.canvas').css('visibility','hidden')
-                            $('.canvas'+ui.value).css('visibility','visible')
-
+                            slideTo(ui.value);
 
                         },
                         stop: function() {
@@ -94,10 +96,56 @@
                         }
 
                     });
-
-
+                    var timeId;
+                    var timeNum;
+                    $('.play').click(function() {
+                        var timeFunc = function() {
+                            timeNum = $( "#slider").slider('value');
+                            slideTo(++timeNum % diagram.length);
+                            timeId = window.setTimeout(timeFunc , 1000);
+                        };
+                        timeId = window.setTimeout(timeFunc , 1000);
+                        $('.play').css('display', 'none');
+                        $('.stop').css('display', 'inline-block');
+                        return false;
+                    });
+                    $('.stop').click(function() {
+                        clearTimeout(timeId);
+                        $('.play').css('display', 'inline-block');
+                        $('.stop').css('display', 'none');
+                        return false;
+                    });
+                    $('.back').click(function() {
+                        var to = $( "#slider").slider('value')-1;
+                        slideTo(to);
+                        return false;
+                    });
+                    $('.forward').click(function() {
+                        var to = $( "#slider").slider('value')+1;
+                        slideTo(to);
+                        return false;
+                    });
 
                 });
+
+        function slideTo(id) {
+            if(0 <= id && id < diagram.length) {
+                $( "#slider").slider('value', id);
+                $('.canvas').css('visibility','hidden')
+                $('.canvas'+id).css('visibility','visible')
+                if(id == 0) {
+                    $('.back').css('visibility','hidden')
+                } else {
+                    $('.back').css('visibility','visible')
+                }
+                if(id == diagram.length-1) {
+                    $('.forward').css('visibility','hidden')
+                } else {
+                    $('.forward').css('visibility','visible')
+                }
+            }
+
+        }
 
     </script>
     <!--
@@ -112,7 +160,17 @@
 
 
 
-<div id="slider" class="col-md-5"></div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8"><div id="slider"></div></div>
+    <div class="col-md-1">
+        <a href="#" class="back"> <span class="glyphicon glyphicon-backward"></span></a>
+        <a href="#" class="play"> <span class="glyphicon glyphicon-play"></span></a>
+        <a href="#" class="stop"> <span class="glyphicon glyphicon-stop"></span></a>
+        <a href="#" class="forward"> <span class="glyphicon glyphicon-forward"></span></a>
+    </div>
+    <div class="col-md-1"></div>
+</div>
 <div id="can"></div>
 <div class="alert alert-success" role="alert"></div>
 

@@ -48,45 +48,41 @@
                 <ul class="canvas" key="{{ $experiment->key }}">
 
                     <li class="start" id="start"><div>&nbsp;</div></li>
-                    @if($element)
-                        <li id="{{$element->id }}" class="{{ $element->getClass() }}" ><div>{!! $element->title !!}</div></li>
+                    @while($element != null)
+                        @if($element->type == 5)
+                            <li id="{{$element->id }}" class="{{ $element->getClass() }}">
+                                @if($element->content == 0)
+                                    <div class="num1">
+                                        <hr>
+                                        <ul><li style="background-color:#d9534f;color: white">bitte Bearbeiten</li></ul>
+                                        <hr>
+                                    </div>
+                                @else
+                                    <div class="num{{$element->content}}">
+                                        <span class="xorraute">XOR</span>
+                                        <hr>
+                                        @foreach($element->getRef() as $ul)
+                                            <ul uid="{{ $i++ }}">
+                                                @foreach($ul as $li)
+                                                    <li id="{{$li->id}}" class="{{ $li->getClass() }}"><div>{{$li->title  }}</div></li>
+                                                @endforeach
+                                            </ul>
+                                        @endforeach
+                                        @for($j = count($element->getRef()); $j < $element->content; $j++)
+                                            <ul uid="{{  $j }}"></ul>
+                                        @endfor
+                                        <hr>
+                                    </div>
+                                @endif
 
-                        @while($element = $element->next())
-                            @if($element->type == 5)
-                                <li id="{{$element->id }}" class="{{ $element->getClass() }}">
-                                    @if($element->content == 0)
-                                        <div class="num1">
-                                            <hr>
-                                            <ul><li style="background-color:#d9534f;color: white">bitte Bearbeiten</li></ul>
-                                            <hr>
-                                        </div>
-                                    @else
-                                        <div class="num{{$element->content}}">
-                                            <span class="xorraute">XOR</span>
-                                            <hr>
-                                            @foreach($element->getRef() as $ul)
-                                                <ul uid="{{ $i++ }}">
-                                                    @foreach($ul as $li)
-                                                        <li id="{{$li->id}}" class="{{ $li->getClass() }}"><div>{{$li->title  }}</div></li>
-                                                    @endforeach
-                                                </ul>
-                                            @endforeach
-                                            @for($j = count($element->getRef()); $j < $element->content; $j++)
-                                                <ul uid="{{  $j }}"></ul>
-                                            @endfor
-                                            <hr>
-                                        </div>
-                                    @endif
-
-                                </li>
-                            @else
-                                <li id="{{$element->id }}" class="{{ $element->getClass() }}"><div>{!! $element->title !!}</div></li>
+                            </li>
+                        @else
+                            <li id="{{$element->id }}" class="{{ $element->getClass() }}"><div>{!! $element->title !!}</div></li>
 
 
-                            @endif
-                        @endwhile
-
-                    @endif
+                        @endif
+                        <?php $element = $element->next(); ?>
+                    @endwhile
                     <li class="ende" id="ende"><div>&nbsp;</div></li>
                 </ul>
 

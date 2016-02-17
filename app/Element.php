@@ -53,17 +53,22 @@ class Element extends Model
      */
     public function getRef()
     {
-        $array = json_decode($this->ref, true);
-        foreach($array as $i => $a) {
-            foreach($a as $j => $element) {
-                $array[$i][$j] = Element::findOrFail($element);
+        if($this->ref != "") {
+            $array = json_decode($this->ref, true);
+            if(is_array($array)) {
+                foreach ($array as $i => $a) {
+                    foreach ($a as $j => $element) {
+                        $array[$i][$j] = Element::findOrFail($element);
+                    }
+                }
+                if ($this->content < count($array)) {
+
+                }
+
+                return $array;
             }
         }
-        if($this->content < count($array)) {
-
-        }
-        return $array;
-
+        return array();
     }
 
     public function getClass() {

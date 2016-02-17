@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password','groups'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -48,5 +48,30 @@ class User extends Model implements AuthenticatableContract,
 
     }
 
+    function getGroup()  {
+        if($this->groups != "" and is_array(explode(",",$this->groups))) {
+            return json_decode($this->groups, true);
+        }
+    }
+
+    function inGroup($id) {
+        if($this->groups != "" and is_array(explode(",",$this->groups)) and in_array($id,explode(",",$this->groups))) {
+            return true;
+        }
+        return false;
+    }
+
+    function isAdmin() {
+        if($this->groups != "" and is_array(explode(",",$this->groups)) and in_array(1,explode(",",$this->groups))) {
+            return true;
+        }
+        return false;
+    }
+    function isEditor() {
+        if($this->groups != "" and is_array(explode(",",$this->groups)) and in_array(2,explode(",",$this->groups))) {
+            return true;
+        }
+        return false;
+    }
 
 }

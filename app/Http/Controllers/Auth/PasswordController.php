@@ -20,6 +20,9 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
+    private $subject = "PEx: Passwort vergeben";
+
+
     /**
      * Create a new password controller instance.
      *

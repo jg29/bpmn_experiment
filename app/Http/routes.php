@@ -16,24 +16,25 @@
 Route::get('/', "PagesController@home");
 
 Route::get('/danke', "PagesController@danke");
-Route::get('/test', "PagesController@test");
-Route::get('/excel', function() {
-
-    Excel::create('Download', function($excel) {
-
-        $excel->sheet('Seite', function($sheet) {
-
-            $sheet->loadView('test.excel');
-
-        });
-
-    })->download('xls');
+Route::get('/test', function(){
+    return  "juhu" ; //  shell_exec("/usr/local/bin/convert diagram.svg test.png");
 
 });
 
+Route::get('/freigabe/{experiment}', "FreigabeController@freigabe");
+Route::post('/freigabe/{experiment}/save','FreigabeController@save');
+
+
+
 
 Route::get('auswertung/timeline/{element}/{student}','AuswertungController@timeline');
-Route::resource('auswertung','AuswertungController');
+Route::get('auswertung/excel/{id}','AuswertungController@excel');
+Route::get('auswertung/{id}','AuswertungController@show');
+
+
+
+Route::resource('user','UserController');
+
 
 
 Route::resource('experiment','ExperimentController');
@@ -41,6 +42,7 @@ Route::resource('experiment','ExperimentController');
 Route::post('/', "StudentController@redirect");
 Route::get('experiment/{key}/{id}','StudentController@element');
 Route::post('experiment/{key}/{id}/save','StudentController@save');
+Route::post('experiment/{key}/{id}/svg','StudentController@saveSvg');
 Route::post('experiment/{key}/{id}/draw','StudentController@saveDraw');
 
 Route::post('element/orderxor','ElementController@orderXor');

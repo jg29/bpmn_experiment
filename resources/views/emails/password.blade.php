@@ -1,3 +1,7 @@
 <!-- resources/views/emails/password.blade.php -->
 
-Click here to reset your password: {{ url('password/reset/'.$token) }}
+<h3>PEx-Account</h3>
+
+Um auf ihren PEx-Account zugreifen zu können, klicken sie bitte auf den Link um ein Passwort zu vergeben.<br><br>
+
+{{ url('password/reset/'.$token) }}

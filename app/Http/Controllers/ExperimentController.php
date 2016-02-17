@@ -30,22 +30,59 @@ class ExperimentController extends Controller
         if (!Auth::check()) {
             return redirect('/auth/login');
         }
-        $experiments = Auth::user()->experiments()->get();
+        $experiments = Experiment::all();
+        $experimentsData = array();
+        $experimentsOwn = array();
+        $experimentsView = array();
+        $experimentsEdit = array();
+
         foreach($experiments as $experiment) {
-            $element =  Element::find($experiment->element_id);
-            while($element != null) {
-                if ($element->type == 5) {
-                    for($i=0;$i<$element->content;$i++) {
-                        $hash[$experiment->id][] = $i . substr(md5(date("s", strtotime($element->created_at)) . $i), -2);
+            if( Auth::user()->id == $experiment->user_id ) {
+                $experimentsOwn[] = $experiment->id;
+                $experimentsData[$experiment->id] = $experiment;
+                $element =  Element::find($experiment->element_id);
+                while($element != null) {
+                    if ($element->type == 5) {
+                        for($i=0;$i<$element->content;$i++) {
+                            $hash[$experiment->id][] = $i . substr(md5(date("s", strtotime($element->created_at)) . $i), -2);
+                        }
+                    }
+                    $element = $element->next();
+                }
+            }
+
+            $group = json_decode($experiment->group,true);
+
+            if(is_array($group)) {
+                if (array_key_exists('edit', $group) and in_array(Auth::user()->id, $group['edit'])) {
+                    $experimentsEdit[] = $experiment->id;
+                    $experimentsData[$experiment->id] = $experiment;
+                    $element =  Element::find($experiment->element_id);
+                    while($element != null) {
+                        if ($element->type == 5) {
+                            for($i=0;$i<$element->content;$i++) {
+                                $hash[$experiment->id][$i] = $i . substr(md5(date("s", strtotime($element->created_at)) . $i), -2);
+                            }
+                        }
+                        $element = $element->next();
                     }
                 }
-                $element = $element->next();
+                if (array_key_exists('view', $group) and in_array(Auth::user()->id, $group['view'])) {
+                    $experimentsView[] = $experiment->id;
+                    $experimentsData[$experiment->id] = $experiment;
+                    $element =  Element::find($experiment->element_id);
+                    while($element != null) {
+                        if ($element->type == 5) {
+                            for($i=0;$i<$element->content;$i++) {
+                                $hash[$experiment->id][$i] = $i . substr(md5(date("s", strtotime($element->created_at)) . $i), -2);
+                            }
+                        }
+                        $element = $element->next();
+                    }
+                }
             }
         }
-
-
-
-        return view('experiment.index', compact('experiments', 'hash'));
+        return view('experiment.index', compact('experimentsData','experimentsOwn','experimentsView','experimentsEdit', 'hash'));
 
 
 
