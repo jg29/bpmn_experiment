@@ -1,12 +1,9 @@
 @extends('app')
 
 @section('content')
-
     <div class="container">
         <div class="form">
-
             <h2>Benutzerverwaltung</h2>
-
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -33,7 +30,6 @@
                                     <td><a href="user/{{ $user->id }}/edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
                                 @endif
                             </tr>
-
                     @endforeach
                 @else
                     <tr><td colspan="4">Keine eigenen Experimente</td></tr>

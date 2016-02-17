@@ -21,6 +21,7 @@ Route::get('/test', function(){
 
 });
 
+Route::post('/freigabe/mail', "FreigabeController@mail");
 Route::get('/freigabe/{experiment}', "FreigabeController@freigabe");
 Route::post('/freigabe/{experiment}/save','FreigabeController@save');
 
