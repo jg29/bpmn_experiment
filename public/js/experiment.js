@@ -51,10 +51,8 @@ function save() {
         });
 
     }
-
-        if($('.canvas .xor').length == 0) {
+    if($('.canvas .xor').length == 0) {
         $('.menu .xor').css('display','')
-
     } else {
         $('.menu .xor').css('display','none')
     }
@@ -150,11 +148,7 @@ $(function() {
     var $copy;
     var sort = {
         revert: true,
-        start: function() {
-            $(".arrow").css("visibility","hidden")
-        },
         stop: function() {
-            $(".arrow").css("visibility","");
             save();
         },
     };
@@ -179,7 +173,9 @@ $(function() {
             var id = $(this).attr('typ')
             if (id == 5) {
                 var name = 'XOR';
-                $copy.find('div').html('<hr><ul><li style="background-color:#d9534f;color: white">bitte Bearbeiten</li></ul><hr>')
+                $copy.find('div').html('<span class="xorraute">XOR</span><hr>Bitte Pfadanzahl einstellen<ul class="ui-sortable" uid="0"></ul><hr>')
+                $(".canvas ul").sortable(sort);
+
             } else{
                 //var name = prompt("Bitte Name eingeben:");
                 var name = "";

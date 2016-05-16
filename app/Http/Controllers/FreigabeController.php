@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Psy\Exception\ErrorException;
 
 class FreigabeController extends Controller {
     /**
@@ -19,10 +20,11 @@ class FreigabeController extends Controller {
     public function freigabe($experiment) {
         $experiment = Experiment::findOrFail($experiment);
         $rechte = json_decode($experiment->group,true);
+        $editUser = array();
+        $viewUser = array();
+        $users = array();
+
         if(is_array($rechte)) {
-            $editUser = array();
-            $viewUser = array();
-            $users = array();
             $keys = array("edit", "view");
             foreach($keys as $key) {
                 if (array_key_exists($key, $rechte)) {
@@ -46,13 +48,17 @@ class FreigabeController extends Controller {
         $experiment = Experiment::findOrFail($experiment);
         $experiment->group = json_encode($request->recht);
         $experiment->save();
-        return redirect("/experiment");
+        return redirect("/freigabe/".$experiment->id);
     }
 
     public function mail() {
         $user = User::where("email", $_POST['mail'])->first();
         if(is_object($user) and $user->isEditor() and $user->id != Auth::user()->id ) {
             return $user;
+        } elseif(is_object($user) and $user->isEditor()) {
+            return "error_selbst";
+        } elseif(is_object($user) and $user->id != Auth::user()->id) {
+            return "error_recht";
         }
         return "";
     }

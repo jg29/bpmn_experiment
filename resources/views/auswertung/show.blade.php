@@ -156,13 +156,14 @@
     <div class="left"></div>
     <div class="container">
         <div>
-            <h3>Auswertung: {{ $experiment->title }}</h3>
+            <h3>Auswertung: {{ $experiment->title }} - <a href="http://localhost/auswertung/excel/{{$experiment->id}}"><span class="glyphicon glyphicon-download-alt"></span> Excel</a></h3>
 
             <table class="table datatable table-striped table-bordered" width="100%">
 
                 <thead>
                     <tr class="group">
                         <th>XOR-Pfad</th>
+                        <th>ID</th>
                         @foreach($elements as $element)
                             @if(!is_array($element))
                                 <th>{{ $element->title }}</th>
@@ -173,10 +174,12 @@
 
                 </thead>
                 <tbody>
+
                     @foreach($antworten as $k => $student)
                         <tr>
 
                             <td> <div style="width: 75px"></div>Pfad {{ \App\Answer::getPfad($k)+1 }}</td>
+                            <td> <div style="width: 25px"></div>{{ \App\User::generateUserId($k) }}</td>
 
                             @foreach($elements as $key => $element)
                                 @if(!is_array($element))

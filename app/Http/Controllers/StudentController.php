@@ -69,12 +69,10 @@ class StudentController extends Controller
 
         if(count($array) == 2 and $array[0] != '' and $array[1] != '') {
 
+            $mt = explode(' ', microtime());
             if(session("user") == "") {
-                session(["user"=>time()]);
+                session(["user"=>$mt[1] * 1000 + round($mt[0] * 1000)]);
             }
-
-
-
 
             $experiment = Experiment::where("key", $array[0])->first();
             if($experiment == null) {
@@ -83,12 +81,11 @@ class StudentController extends Controller
             $elements = array();
             $element =  Element::find($experiment->element_id);
             while($element != null) {
-                if($element->type == 5) {
+                if($element->type == Element::XORGATE) {
                     $hash = $array[1]{0}.substr(md5(date("s", strtotime($element->created_at)).$array[1]{0}), -2);
                     if(trim($hash) != trim($array[1])) {
                         return redirect('/');
                     }
-
                     $xor = json_decode($element->ref, true);
                     $elements = array_merge($elements, $xor[$array[1]{0}]);
                 } else {
@@ -141,7 +138,7 @@ class StudentController extends Controller
         //file_put_contents("svg/".$experiment->id."/".$f_id."_".session("user").".svg",  $_POST['draw']);
         fclose($f);
 
-        exec("/opt/local/bin/convert svg/".$experiment->id."/".$f_id."_".session("user").".svg svg/".$experiment->id."/".$f_id."_".session("user").".png");
+        exec("/opt/local/bin/convert -background none svg/".$experiment->id."/".$f_id."_".session("user").".svg svg/".$experiment->id."/".$f_id."_".session("user").".png");
 
         return "ok";
     }

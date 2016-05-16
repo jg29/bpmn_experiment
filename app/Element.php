@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Element extends Model
 {
+
     const MESSAGE = 1;
     const SURVAY = 2;
     const MODEL = 3;
     const FEEDBACK = 4;
-    const XORs = 5;
-
+    const XORGATE = 5;
 
     /**
-     * @var array
+     * @var Sicherheitseinstellung Laravel fillable
      */
     protected $fillable = [
         'title',
@@ -23,10 +23,6 @@ class Element extends Model
         'element_id',
         'type'
     ];
-
-
-
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -39,20 +35,14 @@ class Element extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function fields()
-    {
-
-
+    public function fields() {
         return $this->hasMany('App\Field')->orderBy('sort', 'ASC');
-
-
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getRef()
-    {
+    public function getRef() {
         if($this->ref != "") {
             $array = json_decode($this->ref, true);
             if(is_array($array)) {
@@ -71,6 +61,9 @@ class Element extends Model
         return array();
     }
 
+    /**
+     * @return string
+     */
     public function getClass() {
         switch ($this->type) {
             case 1: return "message";
@@ -81,5 +74,25 @@ class Element extends Model
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function getElement($id) {
+        return Element::findOrFail($id);
+    }
+
+    /**
+     * @param $array
+     * @return int
+     */
+    public static function countArray($array) {
+        $num = 0;
+        foreach ($array as $a) {
+            $num += count($a);
+
+        }
+        return $num;
+    }
 
 }

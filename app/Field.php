@@ -47,4 +47,10 @@ class Field extends Model
 
     }
 
+    public static function getField($id) {
+        return Field::findOrFail($id);
+    }
+
+
+
 }

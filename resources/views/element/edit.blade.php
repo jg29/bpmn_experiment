@@ -1,6 +1,6 @@
 
 {!! Form::model($element, array('url' => 'element/'.$element->id, 'method' => 'patch', 'class'=>'element'.$element->id.' form-horizontal','style'=>'margin-top:20px;')) !!}
-@if($element->type != 5)
+@if($element->type != App\Element::XORGATE)
     <div class="form-group">
         {!! Form::label('title', 'Titel:',array('class'=>'col-sm-3 control-label')) !!}
         <div class="col-sm-9"  style="padding-bottom: 5px;">
@@ -9,7 +9,7 @@
 </div>
     @endif
     <div class="form-group">
-        @if($element->type == 5)
+        @if($element->type ==  App\Element::XORGATE)
             {!! Form::label('content', 'XOR-Pfade:', array('class'=>'col-sm-3 control-label')) !!}
             <div class="col-sm-9"  style="padding-bottom: 5px;">
             {!! Form::input('number', 'content', null , array('class'=>'form-control numbermin', 'min'=>"1", 'max'=>"6")) !!}
@@ -33,14 +33,14 @@
 
 <div>&nbsp;</div>
 
-@if($element->type == 5)
+@if($element->type == App\Element::XORGATE)
     <h4>Schlüssel</h4>
     @for($i=0;$i<($element->content);$i++)
         Pfad {{ $i+1 }}: <span class="exkey"></span>{{ ($i).substr(md5(date("s", strtotime($element->created_at)).$i), -2) }}<br>
     @endfor
 @endif
 
-@if($element->type == 2)
+@if($element->type == App\Element::SURVAY)
     <table class="table table-striped nomargin">
         <thead>
             <tr>

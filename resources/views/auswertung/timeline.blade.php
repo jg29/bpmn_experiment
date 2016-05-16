@@ -45,11 +45,19 @@
         .stop{
             display: none;
         }
+        .front {
+            z-index: 10000;
+        }
     </style>
     <script>
         var diagram = Array();
+        var diagramTime = Array();
+        <?php $start = null; $max = "" ?>
         @foreach($diagramme as $diagramm)
+            <?php if($start == null) {$start = strtotime($diagramm->created_at); }
+             $max = date("H:i:s",strtotime($diagramm->created_at)-$start);?>
             diagram.push('{!! str_replace("\n","",$diagramm->value) !!}');
+            diagramTime.push('{!! $max !!}');
         @endforeach
                    $(function() {
                     var BpmnViewer = window.BpmnJS;
@@ -70,7 +78,8 @@
                                 } else {
 
                                     $('.alert-success').delay(500).fadeOut(500);
-                                    $('#slider').fadeIn(500);
+                                    $('#slider, .fadeIn').fadeIn(500);
+                                    slideTo(num)
                                 }
 
                             }
@@ -143,6 +152,13 @@
                 } else {
                     $('.forward').css('visibility','visible')
                 }
+
+                $(".schritt").html(id+1+"/"+diagramTime.length);
+                $(".zeit").html(diagramTime[id]);
+                $(".gate").html($('.canvas'+id).find("g[data-element-id^='ExclusiveGateway']").length/2);
+                $(".xor").html($('.canvas'+id).find("g[data-element-id^='ExclusiveGateway']").length/2);
+                $(".aktivitaeten").html($('.canvas'+id).find(".djs-visual rect").length);
+                $(".pfeil").html($('.canvas'+id).find(".djs-element polyline").length);
             }
 
         }
@@ -161,15 +177,24 @@
 
 
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8"><div id="slider"></div></div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6"><div id="slider"></div></div>
     <div class="col-md-1">
         <a href="#" class="back"> <span class="glyphicon glyphicon-backward"></span></a>
         <a href="#" class="play"> <span class="glyphicon glyphicon-play"></span></a>
         <a href="#" class="stop"> <span class="glyphicon glyphicon-stop"></span></a>
         <a href="#" class="forward"> <span class="glyphicon glyphicon-forward"></span></a>
     </div>
-    <div class="col-md-1"></div>
+    <div class="col-md-4 front fadeIn" style="display: none;">
+        <label for="schritt">Bearbeitungsschritt: </label> <span class="schritt"></span><br>
+        <label for="zeit">Bearbeitungszeit: </label> <span class="zeit"></span>/{{$max}}<br>
+        <label for="aktivitaeten">Aktivitäten: </label> <span class="aktivitaeten"></span><br>
+        <label for="pfeil">Kanten: </label> <span class="pfeil"></span><br>
+        <label for="gate">Gateways: </label> <span class="gate"></span><br>
+        <label for="xor">XOR: </label> <span class="xor"></span><br>
+        <label for="and">AND: </label> <span class="and"></span><br>
+        <label for="sum">Summe: </label> <span class="sum"></span>
+    </div>
 </div>
 <div id="can"></div>
 <div class="alert alert-success" role="alert"></div>

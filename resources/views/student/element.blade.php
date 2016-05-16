@@ -147,7 +147,7 @@ select.form-control {
                 </div>
             {!! Form::close() !!}
         </div>
-    @elseif($element->type == 3)
+    @elseif($element->type == App\Element::MODEL)
 
             <div id="row">
                 <div class="col-sm-offset-9 col-sm-3"><h2>{{ $element->title }}</h2>

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DB;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -72,6 +73,16 @@ class User extends Model implements AuthenticatableContract,
             return true;
         }
         return false;
+    }
+
+    public static function generateUserId($time) {
+        $users = DB::table('answers')->groupBy("student")->get();
+        $userArray = array();
+        $num = 1;
+        foreach($users as $user) {
+            $userArray[$user->student] = $num++;
+        }
+        return $userArray[$time];
     }
 
 }

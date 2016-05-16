@@ -12,26 +12,7 @@ use App\Http\Controllers\Controller;
 
 class ElementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //$this->save(new Experiment($request->all()));
-
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -49,16 +30,6 @@ class ElementController extends Controller
         return $id;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -72,7 +43,7 @@ class ElementController extends Controller
             return redirect('/auth/login');
         }
         $element = Element::findOrFail($id);
-        if($element->type == Element::SURVAY || $element->type == Element::XORs ) {
+        if($element->type == Element::SURVAY || $element->type == Element::XORGATE ) {
             $fields = $element->fields;
             return view('element.edit', compact('element','fields'));
         }
@@ -96,17 +67,6 @@ class ElementController extends Controller
         $element->update($request->all());
         return $element->id;
 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
 

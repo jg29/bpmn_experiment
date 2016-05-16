@@ -21,9 +21,13 @@
                                 <tr>
                                     <td>{{ $experiment->title }}</td>
                                     <td>
-                                        @foreach($hash[$experiment->id] as $key => $wert)
-                                            XOR-Key {{ $key+1 }}: {{ $experiment->key }}-{{$wert}} <br>
-                                        @endforeach
+                                        @if(array_key_exists($experiment->id, $hash))
+                                            @foreach($hash[$experiment->id] as $key => $wert)
+                                                XOR-Key {{ $key+1 }}: {{ $experiment->key }}-{{$wert}} <br>
+                                            @endforeach
+                                        @else
+                                            XOR nicht gesetzt.
+                                        @endif
                                     </td>
 
                                     <td width="10"><a href="experiment/{{ $experiment->id }}/edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>

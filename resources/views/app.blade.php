@@ -72,7 +72,7 @@
                     <p class="navbar-text">Eingeloggt als {{ Auth::user()->name }} </p>
                     <li><a href="/auth/logout">Logout</a></li>
                 @else
-                    <li><a href="/auth/register">Register</a></li>
+                    <!--<li><a href="/auth/register">Register</a></li>-->
                     <li><a href="/auth/login">Login</a></li>
                 @endif
             </ul>

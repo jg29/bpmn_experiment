@@ -6,32 +6,66 @@ use App\Field;
 use App\Answer;
 use App\Experiment;
 use App\Element;
-use Illuminate\Http\Request;
 
 use Excel;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class AuswertungController extends Controller
 {
-    public $experiment;
+    public $table;
 
     public function excel($id) {
-        $this->experiment = Experiment::findOrFail($id);
+        $experiment = Experiment::findOrFail($id);
 
-        //
+        $element = Element::findOrFail($experiment->element_id);
 
+        while($element != null) {
+            if($element->type == 5) {
+                $xor = json_decode($element->ref, true);
+                if(is_array($xor)) {
+                    foreach($xor as $pkey => $pfad) {
+                        foreach($pfad as $ekey => $el) {
+                            $ele =  Element::find($el);
+                            if($ele->type == 2) {
+                                $fields = Field::where("element_id", $ele->id)->orderBy('sort')->get();
+                                foreach($fields as $field) {
+                                    $rows[$element->id][$ele->id][]['field'] = $field->id;
+                                }
+                            } elseif($ele->type == 4 or $ele->type == 3) {
+                                $rows[$element->id][$ele->id][]['element'] = $ele->id;
+                            }
+                        }
+                    }
+                }
 
+            } elseif($element->type == 2) {
+                $fields = Field::where("element_id", $element->id)->orderBy('sort')->get();
+                foreach($fields as $field) {
+                    $rows[$element->id][]['field'] = $field->id;
+                }
+            } elseif($element->type == 4 or $element->type == 3) {
+                $rows[$element->id][]['element'] = $element->id;
+            }
+            $element = $element->next();
+        }
+        $this->table = $rows;
 
+        $users = Answer::where('experiment', $id)->groupBy("student")->get();
+
+        //print_r($rows);
+        $this->table = compact('rows', 'experiment', 'users');
+        if(isset($_GET['show']) and $_GET['show']=="html") {
+            return view('export.auswertung', $this->table);
+        }
         Excel::create('Download', function($excel) {
             $excel->sheet('Seite', function($sheet) {
-                $experiment = $this->experiment;
-                $sheet->loadView('export.auswertung', compact('experiment'));
+                $sheet->loadView('export.auswertung', $this->table);
+                $sheet->setAutoSize(true);
+                $sheet->setAutoFilter('A3:BZ3');
             });
         })->download('xls');
 
 
-        //return view('export.auswertung', compact('experiment'));
     }
 
     public function show($id)
@@ -91,7 +125,6 @@ class AuswertungController extends Controller
     public function timeline($element, $student) {
 
         $diagramme = Answer::where("element", $element)->where('student', $student)->get();
-        //->where("experiment", 2)
 
         return view('auswertung.timeline', compact('diagramme'));
 

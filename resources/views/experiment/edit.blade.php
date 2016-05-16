@@ -30,7 +30,8 @@
                 <li typ="2" class="insert survey"><div>Survey</div></li>
                 <li typ="3" class="insert edit"><div>Model</div></li>
                 <li typ="4" class="insert feedback"><div>Feedback</div></li>
-                <li typ="5" class="insert xor" ><div class="num1"><hr><span><p>XOR</p></span><hr></div></li>
+                <li typ="5" class="insert xor" ><div class="num0"><span class="xorraute">XOR</span>
+                        <hr><ul class="ui-sortable" uid="0"></ul><hr></div></li>
             </ul>
         </div>
         <div class="col-md-6 main">
@@ -49,12 +50,13 @@
 
                     <li class="start" id="start"><div>&nbsp;</div></li>
                     @while($element != null)
-                        @if($element->type == 5)
+                        @if($element->type == \App\Element::XORGATE)
                             <li id="{{$element->id }}" class="{{ $element->getClass() }}">
                                 @if($element->content == 0)
-                                    <div class="num1">
-                                        <hr>
-                                        <ul><li style="background-color:#d9534f;color: white">bitte Bearbeiten</li></ul>
+                                    <div class="num{{$element->content}}">
+                                        <span class="xorraute">XOR</span>
+                                        <hr>Bitte Pfadanzahl einstellen
+                                        <ul class="ui-sortable" uid="0"></ul>
                                         <hr>
                                     </div>
                                 @else
