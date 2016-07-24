@@ -66,11 +66,11 @@
                             @elseif($field->type == 2)
 
                             @elseif($field->type == 3)
-                                {!! Form::textarea('settings', null,array('class'=>'form-control input-sm','style'=>'height:100px')) !!}
+                                {!! Form::textarea('settings', null,array('class'=>'form-control input-sm settings','style'=>'height:100px')) !!}
                             @elseif($field->type == 4)
-                                {!! Form::textarea('settings', null,array('class'=>'form-control input-sm','style'=>'height:100px')) !!}
+                                {!! Form::textarea('settings', null,array('class'=>'form-control input-sm settings','style'=>'height:100px')) !!}
                             @elseif($field->type == 5)
-                                {!! Form::textarea('settings', null,array('class'=>'form-control input-sm','style'=>'height:100px')) !!}
+                                {!! Form::textarea('settings', null,array('class'=>'form-control input-sm settings','style'=>'height:100px')) !!}
                             @endif
                     </td>
                     <td width="5%">
@@ -105,7 +105,7 @@
                 {!! Form::hidden('element_id', $element->id) !!}
                 <td width="30%" style="border: 0;">{!! Form::text('name', null,array('class'=>'form-control input-sm')) !!}</td>
                 <td width="25%" style="border: 0;">{!! Form::select('type', array('1'=>'Textfeld','2'=>'Textarea', '3'=>'Select', '4'=>'Radio', '5'=>'Checkbox'),null,array('class'=>'form-control input-sm')) !!}</td>
-                <td width="30%" style="border: 0;">{!! Form::textarea('settings', null,array('class'=>'form-control input-sm','style'=>'height:100px')) !!}</td>
+                <td width="30%" style="border: 0;">{!! Form::textarea('settings', null,array('class'=>'form-control input-sm','style'=>'height:100px; display:none')) !!}</td>
                 <td width="5%">
                     {!! Form::checkbox('validation','required') !!}
                 </td>

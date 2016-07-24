@@ -30,6 +30,9 @@ class ExperimentController extends Controller
         if (!Auth::check()) {
             return redirect('/auth/login');
         }
+        if(!in_array("2",explode(",",Auth::user()->groups))) {
+            return redirect('/user');
+        }
         $experiments = Experiment::all();
         $experimentsData = array();
         $experimentsOwn = array();

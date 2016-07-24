@@ -134,9 +134,45 @@ function sidebar(id) {
                 $('.sidepanel').html("kein Element ausgewählt ");
                 save();
             })
+
+            $('.settings').each(function() {
+                $(this).css("display", "none")
+                $(this).parent().append('<div class="dcon"></div>')
+                if($(this).text() != "") {
+                    var settings = $(this).text().split("\n")
+
+                    for (var i = 0; i < settings.length; i++) {
+                        $(this).parent().find('.dcon').append('<div><span class="spancontent" style="width: 80%; display: inline-block">' + settings[i] + '</span><a onclick="rowdel($(this));return false" href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div>');
+                    }
+                }
+                $(this).parent().append('<input type="text" style="width: 80%" /> <a onclick="rowadd($(this));return false" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+
+            });
         }
     });
 }
+
+function rowdel(elem) {
+    var pp = elem.parent().parent().parent()
+    var str = "";
+    elem.parent().remove();
+    pp.find(".spancontent").each(function() {
+        console.log($(this).text())
+        str += $(this).text()+"\n"
+    })
+    str += "\n"
+    str = str.replace("\n\n","");
+    pp.find(".settings").text(str)
+
+}
+function rowadd(elem) {
+    var text = elem.parent().find("input").val()
+    if(text != "") {
+        elem.parent().find(".dcon").append('<div><span class="spancontent" style="width: 80%; display: inline-block">'+text+'</span><a onclick="rowdel($(this));return false" href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div>')
+        elem.parent().find("textarea").text(elem.parent().find("textarea").text()+"\n"+text)
+    }
+}
+
 
 $(function() {
     if($('.canvas .xor').length == 0) {
