@@ -25,6 +25,7 @@
     </div>
 
 
+
 @if($element->type == App\Element::MODEL)
     <div class="form-group">
     {!! Form::label('content', 'BPMN vordefiniert:', array('class'=>'col-sm-3 control-label')) !!}

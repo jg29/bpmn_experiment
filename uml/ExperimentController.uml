@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\App\Http\Controllers\ExperimentController</OriginalElement>
+  <nodes>
+    <node x="0.0" y="414.0">\App\Http\Controllers\UserController</node>
+    <node x="286.0" y="229.0">\App\Http\Controllers\FieldController</node>
+    <node x="282.0" y="0.0">\App\Http\Controllers\StudentController</node>
+    <node x="492.0" y="414.0">\App\Http\Controllers\FreigabeController</node>
+    <node x="0.0" y="599.0">\App\Http\Controllers\PagesController</node>
+    <node x="0.0" y="229.0">\App\Http\Controllers\ElementController</node>
+    <node x="242.0" y="414.0">\App\Http\Controllers\AuswertungController</node>
+    <node x="0.0" y="0.0">\App\Http\Controllers\ExperimentController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\App\Http\Controllers\ExperimentController" target="\App\Http\Controllers\Controller">
+      <point x="0.0" y="-92.0" />
+      <point x="-42.4375" y="15.0" />
+    </edge>
+    <edge source="\App\Http\Controllers\AuswertungController" target="\App\Http\Controllers\Controller">
+      <point x="0.0" y="-59.5" />
+      <point x="42.4375" y="15.0" />
+    </edge>
+    <edge source="\App\Http\Controllers\FreigabeController" target="\App\Http\Controllers\Controller">
+      <point x="0.0" y="-48.0" />
+      <point x="-18.1875" y="15.0" />
+    </edge>
+    <edge source="\App\Http\Controllers\ElementController" target="\App\Http\Controllers\Controller">
+      <point x="0.0" y="-114.0" />
+      <point x="30.3125" y="15.0" />
+    </edge>
+    <edge source="\App\Http\Controllers\UserController" target="\App\Http\Controllers\Controller">
+      <point x="0.0" y="-92.0" />
+      <point x="-6.0625" y="15.0" />
+    </edge>
+    <edge source="\App\Http\Controllers\FieldController" target="\App\Http\Controllers\Controller">
+      <point x="0.0" y="-114.0" />
+      <point x="-30.3125" y="15.0" />
+    </edge>
+    <edge source="\App\Http\Controllers\StudentController" target="\App\Http\Controllers\Controller">
+      <point x="0.0" y="-70.0" />
+      <point x="18.1875" y="15.0" />
+    </edge>
+    <edge source="\App\Http\Controllers\PagesController" target="\App\Http\Controllers\Controller">
+      <point x="0.0" y="-37.0" />
+      <point x="6.0625" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="368.0" y="336.5" />
+  <SelectedNodes>
+    <node>\App\Http\Controllers\StudentController</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+    <Category>Constants</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
