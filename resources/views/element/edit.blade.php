@@ -27,8 +27,9 @@
 
 @if($element->type == App\Element::MODEL)
     <div class="form-group">
-    {!! Form::label('content', 'BPMN vordefiniert (Editor):', array('class'=>'col-sm-3 control-label')) !!}
+    {!! Form::label('content', 'BPMN vordefiniert:', array('class'=>'col-sm-3 control-label')) !!}
         <div class="col-sm-9"  style="padding-bottom: 5px;">
+            <a href="../../experiment/modeler">zum Editor</a>
             {!! Form::textarea('ref', null,array('class'=>'form-control')) !!}
             </div>
 
