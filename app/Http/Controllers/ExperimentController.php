@@ -15,7 +15,12 @@ use App\Http\Requests\ExperimentRequest;
 use App\Http\Controllers\Controller;
 
 /**
- * Class ExperimentController
+ * Class ExperimentController:
+ *  - Experiment erstellen
+ *  - Experiment Edit
+ *  - Studentenansicht von Experimenten
+ *
+ *
  * @package App\Http\Controllers
  */
 class ExperimentController extends Controller
@@ -181,6 +186,19 @@ class ExperimentController extends Controller
         $i = 0;
         //return dd($element->next());
         return view('experiment.edit', compact('experiment','element','i'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function modeler()
+    {
+
+        //return dd($element->next());
+        return view('experiment.modeler');
     }
 
     /**

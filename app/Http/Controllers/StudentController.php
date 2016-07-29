@@ -13,6 +13,9 @@ use App\Http\Requests;
 
 /**
  * Class StudentController
+ *  - Weiterleitung eines Studenten mit Experimentenkey an den Experimentencontroller
+ *
+ *
  * @package App\Http\Controllers
  */
 class StudentController extends Controller

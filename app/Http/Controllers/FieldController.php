@@ -8,6 +8,14 @@ use App\Field;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+/*
+ * Wird nur inderekt per Javascript verwendet. Hat keinen direkten View
+ *
+ *
+ *
+ */
+
+
 class FieldController extends Controller
 {
 

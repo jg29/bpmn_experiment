@@ -10,6 +10,15 @@ use App\Element;
 use Excel;
 use App\Http\Requests;
 
+/*
+ * Dieser Controller kümmert sich um:
+ *  - Timeline
+ *  - Excel-Export
+ *  - Evaluationstabelle
+ */
+
+
+
 class AuswertungController extends Controller
 {
     public $table;

@@ -23,12 +23,27 @@
         @endif
 
     </div>
+
+
+@if($element->type == App\Element::MODEL)
+    <div class="form-group">
+    {!! Form::label('content', 'BPMN vordefiniert (Editor):', array('class'=>'col-sm-3 control-label')) !!}
+        <div class="col-sm-9"  style="padding-bottom: 5px;">
+            {!! Form::textarea('ref', null,array('class'=>'form-control')) !!}
+            </div>
+
+    </div>
+
+@endif
+
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
             {!! Form::submit("Speichern", array('class'=>'btn btn-default')) !!}
             <input type="button" value="Löschen" class="delete btn btn-default">
         </div>
     </div>
+
+
 {!! Form::close() !!}
 
 <div>&nbsp;</div>
@@ -39,6 +54,8 @@
         Pfad {{ $i+1 }}: <span class="exkey"></span>{{ ($i).substr(md5(date("s", strtotime($element->created_at)).$i), -2) }}<br>
     @endfor
 @endif
+
+
 
 @if($element->type == App\Element::SURVAY)
     <table class="table table-striped nomargin">

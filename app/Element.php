@@ -21,6 +21,7 @@ class Element extends Model
         'title',
         'content',
         'element_id',
+        'ref',
         'type'
     ];
 

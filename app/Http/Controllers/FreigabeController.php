@@ -11,6 +11,12 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Psy\Exception\ErrorException;
 
+/*
+ * Kümmert sich um die Freigabe von Experimenten
+ *
+ */
+
+
 class FreigabeController extends Controller {
     /**
      * Display a listing of the resource.

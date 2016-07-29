@@ -170,7 +170,7 @@ select.form-control {
 
                 <div class="canvas" id="js-canvas"></div>
             </div>
-
+            <textarea class="load" style="display: none;">{!! $element->ref !!}</textarea>
             <script src="/modeler/dist/index.js"></script>
             {!! Form::open(array('url' => "/experiment/".$experiment->key."/".$element->id.'/draw', 'method' => 'post','class'=>'form-horizontal token')) !!}
             {!! Form::close() !!}

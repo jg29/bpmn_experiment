@@ -37,10 +37,11 @@ Route::get('auswertung/{id}','AuswertungController@show');
 Route::resource('user','UserController');
 
 
-
+Route::get('experiment/modeler','ExperimentController@modeler');
 Route::resource('experiment','ExperimentController');
 
 Route::post('/', "StudentController@redirect");
+
 Route::get('experiment/{key}/{id}','StudentController@element');
 Route::post('experiment/{key}/{id}/save','StudentController@save');
 Route::post('experiment/{key}/{id}/svg','StudentController@saveSvg');
